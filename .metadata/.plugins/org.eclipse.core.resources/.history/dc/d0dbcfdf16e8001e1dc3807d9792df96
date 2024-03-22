@@ -1,0 +1,7 @@
+package com.mohaji.dto;
+
+public class State {
+
+	private int deptno;
+	private int empno;
+}

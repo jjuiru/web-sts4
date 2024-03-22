@@ -1,0 +1,28 @@
+package com.mohaji.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class MyController {
+	
+	@Autowired
+	JdbcTemplate jdbcTemplate;
+
+	@GetMapping("/")
+	public String root() {
+		return "root";
+	}
+	
+	@GetMapping("/list")
+	public String list() {
+		return "list";
+	}
+	
+	@GetMapping("/list2")
+	public String list2() {
+		return "list2";
+	}
+}

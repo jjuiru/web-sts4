@@ -1,0 +1,5 @@
+package com.mohaji.dto;
+
+public class State {
+
+}

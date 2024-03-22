@@ -1,0 +1,16 @@
+package com.mohaji.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import com.mohaji.dto.State;
+
+@Configuration
+public class Nocofig {
+    @Bean
+    State state() {
+    	State state= new State();
+		return null;
+	 
+ }
+}
