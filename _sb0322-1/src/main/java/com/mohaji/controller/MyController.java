@@ -14,9 +14,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.mohaji.dto.Dept;
 import com.mohaji.dto.Emp;
 import com.mohaji.dto.State;
+import com.mohaji.service.DeptService;
+import com.mohaji.service.EmpService;
 
 @Controller
 public class MyController {
+	
+	@Autowired
+	DeptService deptservice;
+	
+	@Autowired
+	EmpService empservice;
 	
 	@Autowired
 	State state;
@@ -26,76 +34,23 @@ public class MyController {
 
 	@GetMapping("/")
 	public String root(Model model) { // dao 만들징 않고 빠르게 하기
-		List<Dept> list = new ArrayList<>();
-		SqlRowSet rs = jdbcTemplate.queryForRowSet("select * from dept");
-		while (rs.next()) {
-			Dept dept = Dept.builder().deptno(rs.getInt("deptno")).dname(rs.getString("dname"))
-					.loc(rs.getString("loc")).build();
-			list.add(dept);
-		}
-		model.addAttribute("list", list);
-
+		model.addAttribute("list", deptservice.deptSelectAll());
 		return "root";
 	}
 	
 	@GetMapping("/selectEmp")
 	public String selectEmp(Model model, int deptno ) {
 		state.setDeptno(deptno);
-		List<Dept> list = new ArrayList<>();
-		SqlRowSet rs = jdbcTemplate.queryForRowSet("select * from dept");
-		while (rs.next()) {
-			Dept dept = Dept.builder().deptno(rs.getInt("deptno")).dname(rs.getString("dname"))
-					.loc(rs.getString("loc")).build();
-			list.add(dept);
-		}
-				
-		List<Emp> list2 = new ArrayList<>();
-		SqlRowSet rs2 = jdbcTemplate.queryForRowSet("select * from emp where deptno = ?", deptno);
-		while (rs2.next()) {
-			Emp emp = Emp.builder().empno(rs2.getInt("empno")).ename(rs2.getString("ename"))
-					.job(rs2.getString("job")).mgr(rs2.getInt("mgr"))
-					.hiredate(rs2.getString("hiredate")).sal(rs2.getInt("sal"))
-					.comm(rs2.getInt("comm")).deptno(rs2.getInt("deptno")).build();
-			list2.add(emp);
-		}
-		model.addAttribute("list2", list2);
-		model.addAttribute("list", list);
+		model.addAttribute("list", deptservice.deptSelectAll());
+		model.addAttribute("list2", empservice.empSelectDeptno(state.getDeptno()));
 		return "root";
 		
 	}
 	@GetMapping("/updateForm1")
 	public String updateForm1(Model model, String empno) {
-		List<Dept> list = new ArrayList<>();
-		SqlRowSet rs = jdbcTemplate.queryForRowSet("select * from dept");
-		while (rs.next()) {
-			Dept dept = Dept.builder().deptno(rs.getInt("deptno")).dname(rs.getString("dname"))
-					.loc(rs.getString("loc")).build();
-			list.add(dept);
-		}
-				
-		List<Emp> list2 = new ArrayList<>();
-		SqlRowSet rs2 = jdbcTemplate.queryForRowSet("select * from emp where deptno = ?", state.getDeptno());
-		while (rs2.next()) {
-			Emp emp = Emp.builder().empno(rs2.getInt("empno")).ename(rs2.getString("ename"))
-					.job(rs2.getString("job")).mgr(rs2.getInt("mgr"))
-					.hiredate(rs2.getString("hiredate")).sal(rs2.getInt("sal"))
-					.comm(rs2.getInt("comm")).deptno(rs2.getInt("deptno")).build();
-			list2.add(emp);
-		}
-		model.addAttribute("list2", list2);
-		model.addAttribute("list", list);
-		
-		Emp emp1 = null;
-		SqlRowSet rs3 = jdbcTemplate.queryForRowSet("select * from emp where empno = ?", empno);
-		while (rs3.next()) {
-			emp1 = Emp.builder().empno(rs3.getInt("empno")).ename(rs3.getString("ename"))
-					.job(rs3.getString("job")).mgr(rs3.getInt("mgr"))
-					.hiredate(rs3.getString("hiredate")).sal(rs3.getInt("sal"))
-					.comm(rs3.getInt("comm")).deptno(rs3.getInt("deptno")).build();
-
-			System.out.println(emp1);
-	}
-	model.addAttribute("list3", emp1);
+		model.addAttribute("list", deptservice.deptSelectAll());
+		model.addAttribute("list2", empservice.empSelectDeptno(state.getDeptno()));
+		model.addAttribute("list3", empservice.empSelectOneService(Integer.parseInt(empno)));
 		return "root";
 	}
 	
