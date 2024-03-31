@@ -21,16 +21,17 @@ public class EmpService {
 	public Emp empSelectOneService(int empno) {
 		return empDao.empSelectOneEmpno(empno);
 	}
-//	
-//	public Member getUpdateService(Member member) {
-//		return memberDao.update(member);
-//	}
-//	public Member getInputService(Member member) {
-//		return memberDao.insert(member);
-//	}
-//	
-//	public void delete(int id) {
-//		memberDao.delete(id);
-//	}
+	
+	public void empUpdate(Emp emp) {
+		empDao.update(emp);
+	}
+	public void empInput(Emp emp) {
+		empDao.input(emp);
+	}
+	
+	public void delete(Emp emp) {
+		empDao.delete(emp);
+	}
+	
 	
 }

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mohaji.mapper.EmpMapper">
+	<select id="selectCount" resultType="Integer">
+		select count(*) from emp
+	</select>
+
+
+	<select id="selectEmpList"
+		resultType="com.mohaji.dto.Emp">
+		<![CDATA[
+			SELECT
+				*
+			FROM
+				EMP
+		]]>
+	</select>
+
+	<insert id="insertEmp" parameterType="com.mohaji.dto.Emp">
+			<![CDATA[
+INSERT INTO emp (
+    empno,
+    ename,
+    job,
+    mgr,
+    hiredate,
+    sal,
+    comm,
+    deptno)
+VALUES 
+(
+    #{empno},
+    #{ename},
+    #{job},
+    #{mgr},
+    CURRENT_TIMESTAMP,
+    #{sal},
+    #{comm},
+    #{deptno}    
+)
+
+		]]>
+	</insert>
+	
+	<delete id="deleteEmp" parameterType="int">
+	DELETE FROM emp WHERE empno = #{empno}
+	</delete>
+	
+	<update id="updateEmp" parameterType="com.mohaji.dto.Emp" >
+				<![CDATA[				
+UPDATE EMP SET 
+ename=	#{ename},
+job=	#{job}, 
+mgr=    #{mgr},
+sal=    #{sal},
+comm=	#{comm}
+WHERE empno= #{empno}
+		]]>
+	</update>
+
+</mapper>

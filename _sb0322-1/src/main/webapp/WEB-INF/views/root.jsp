@@ -110,7 +110,16 @@ td {
         </tr>
         <tr>
             <td><label for="deptno">부서번호</label></td>
-            <td><input type="text" name="deptno" value="${list3.deptno}" /></td>
+            <td>
+                <!-- 선택된 값에 따라 텍스트 박스 표시/숨김 -->
+                <select id="selectBox" name="deptno" onchange="toggleInput(this)">
+                    <option value="${list3.deptno}" selected>${list3.deptno}</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                </select>
+</td>
         </tr>
         <tr>
             <td></td>
@@ -124,11 +133,37 @@ td {
 </form>
 
 <script>
+function toggleInput(selectElement) {
+    var selectedValue = selectElement.value;
+    var deptnoInput = document.getElementById('deptnoInput');
+    var deptnoText = document.getElementById('deptnoText');
+    
+    // 선택된 값이 '10', '20', '30', '40'인 경우
+    if (selectedValue === '10' || selectedValue === '20' || selectedValue === '30' || selectedValue === '40') {
+        deptnoInput.style.display = 'block';
+        // 선택된 값으로 텍스트 박스 업데이트
+        deptnoInput.value = selectedValue;
+        // 선택된 값으로 텍스트 업데이트
+        deptnoText.innerText = getDeptName(selectedValue);
+    } else {
+        deptnoInput.style.display = 'none';
+        deptnoInput.value = '';
+        deptnoText.innerText = '';
+    }
+}
+
+function submitForm(action) {
+    document.getElementById("myForm").submit();
+}
+</script>
+<script>
     function submitForm(action) {
         document.forms[0].action = action;
         document.forms[0].submit();
     }
 </script>
+
+
 
 </body>
 </html>
