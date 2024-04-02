@@ -8,10 +8,6 @@
 <title>MOHAJIPOP</title>
 </head>
 <body>
-<c:choose>
-    <c:when test="true">
-        <!-- condition1이 참일 때 실행될 내용 -->
-<!-- 여기가 타이틀, 메뉴 들어가는 부분 -->
 	<haeder>
 	<article>
 		<div>
@@ -22,10 +18,19 @@
 		</div>
 	</article>
 	<div>
-		<a href="#myPage">00님.(login)</a> <a href="loginPage">로그인</a> <a
-			href="#signIn">회원가입</a> <a href="#myPage">마이페이지.(login)</a> <a
-			href="#logOut">로그아웃.(login)</a>
+	<c:choose>
+	<c:when test="${loginC}">
+		<a>${userId}님.로그인</a> 
+		 <a href="myPage">마이페이지.(login)</a> 
+		 <a href="logout">로그아웃.(login)</a>
 		<h6>=(메뉴)</h6>
+		</c:when>
+		 <c:otherwise>
+        <a href="loginPage">로그인</a>
+        <a href="signUpPage">회원가입</a>        
+        <h6>=(메뉴)</h6>
+    </c:otherwise>
+</c:choose>
 	</div>
 	</haeder>
 	<!-- 여기서부터 내용, 슬라이스 이미지 들어가는 부분 -->
@@ -76,11 +81,15 @@
 		</div>
 		<!-- 기업정보 -->
 	</footer>
-	    </c:when>
-    <c:otherwise>
-        <!-- 조건이 거짓일 때 실행될 내용 -->
-        
-    </c:otherwise>
-</c:choose>
+	<script >
+	window.onload = function() {
+	    var signUp = "${signUp}";
+
+	    if (signUp === "ok") {
+	        // 회원가입 성공 메시지를 띄웁니다.
+	        alert("회원가입이 완료되었습니다. 로그인 해주세요.");
+	    }
+	};
+	</script>
 </body>
 </html>

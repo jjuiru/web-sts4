@@ -22,8 +22,9 @@ public interface MemberMapper {
 	Member selectOneMember(String userId);
 	
 	@Insert("INSERT INTO member (USER_ID, PASS, EMAIL, UNAME, \r\n"
-			+ " CRAETE_DAY, UPDATE_DAT,PHONE_NUM,birth,gender,uevent)"
-			+ "VALUES (#{userId}, #{pass}, #{email} , #{uname}, NOW(), #{phoneNum}, #{birch},#{gender},#{uevent} )")       
+			+ " CREATE_DAY, UPDATE_DAY,PHONE_NUM,birth,gender,uevent)"
+			+ "VALUES ("
+			+ "#{userId}, #{pass}, #{email} , #{uname}, NOW(), #{updateDay}, #{phoneNum}, #{birth},#{gender},#{uevent} )")       
 	void insertMember(Member member);
 
 	@Update("UPDATE member SET PASS = #{pass},"

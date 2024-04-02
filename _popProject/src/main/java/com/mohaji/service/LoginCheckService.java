@@ -25,7 +25,7 @@ public class LoginCheckService {
 		            return true; // 사용자 ID와 비밀번호가 일치하는 회원이 있을 경우 true 반환
 		        }
 		    }
-		System.out.println("일치하는 회원이 없습니다.");
+		System.out.println("일치하는 회원이 없습니다.");		
 		return false; 
  }
 }

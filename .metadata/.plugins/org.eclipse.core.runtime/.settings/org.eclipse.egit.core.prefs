@@ -1,4 +1,4 @@
-GitRepositoriesView.GitDirectories=D\:\\sts4\\.git;
-GitRepositoriesView.GitDirectories.relative=.git;
+GitRepositoriesView.GitDirectories=D\:\\sts4\\.git;D\:\\spwep\\.git;
+GitRepositoriesView.GitDirectories.relative=.git;D\:\\spwep\\.git;
 core_autoIgnoreDerivedResources=false
 eclipse.preferences.version=1
