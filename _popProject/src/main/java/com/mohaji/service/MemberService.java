@@ -29,4 +29,14 @@ public class MemberService {
 		memberMapper.insertMember(member);
 		return true;
 	}
+	
+	public Member memberOneSelect(String userId) {
+		Member member =memberMapper.selectOneMember(userId);
+		return member;
+	}
+	public boolean memberUpdat(Member member) {
+		System.out.println("서비스로 온 :"+member.getUserId());
+		memberMapper.updateMember(member);
+		return true;
+	}
 }

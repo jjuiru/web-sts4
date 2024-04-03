@@ -55,7 +55,14 @@
 			</table>
 
 		</article>
-		<article></article>
+		<article> 
+		<!-- 여기가 달력이랑 검색 있는 사이드 영역 -->
+		<!-- 달력부분은 부트스트랩이나 여러가지 형태로 바꾸기 가능 -->
+		<input type="date" id="findPop" name="findPop">
+		<button type="submit" onclick="window.location.href='artlist'">날짜로검색</button><br>
+		 <input type="text" id="findName" name="findName">
+		 <button type="submit" onclick="window.location.href='artlist'">키워드검색</button>
+		 </article>
 	</figure>
 	
 	<!--  여기는 기업정보 나오는 부분 -->

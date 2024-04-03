@@ -34,8 +34,10 @@ public class MainController {
 	@Autowired
 	LoginCheckService loginCheckService;
 	
+	HttpSession session;
+	
 	private void setLoginCAttribute(Model model, HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
+        session = request.getSession(false);
         boolean loginC = (session != null && session.getAttribute("userId") != null);
         model.addAttribute("loginC", loginC);
         if (loginC) {
@@ -62,14 +64,20 @@ public class MainController {
 	public String view(Model model, String popCode, HttpServletRequest request) {
 		setLoginCAttribute(model, request);
 		model.addAttribute("pop",artboardService.artboardSelectCode(popCode));
+		String userId=(String) session.getAttribute("userId");
+		if(userId==null) {
+			model.addAttribute("onOff", "off");
+			return "artboard/view";
+		}
+		model.addAttribute("onOff", likelistService.checkLike(userId, popCode));
 		return "artboard/view";
 	}
 	
 	@GetMapping("/like")
 	public String like(Model model, String status, String popCode, HttpServletRequest request) {
 		setLoginCAttribute(model, request);
-		String userId = "admin";
-		likelistService.insertLike(status, userId, popCode);
+		String userId=(String) session.getAttribute("userId");
+		model.addAttribute("onOff", likelistService.insertDeleteLike(status, userId, popCode) );
 		model.addAttribute("pop",artboardService.artboardSelectCode(popCode));
 		return "artboard/view";
 	}	
@@ -154,5 +162,28 @@ public class MainController {
 		model.addAttribute("signUp", "ok");
 		model.addAttribute("artlist", artboardService.artboardList());	
 			return "main";
+	}
+	
+	@GetMapping("/artlist")
+	public String artlist(HttpServletRequest request,Model model, String findArtList) {
+		setLoginCAttribute(model, request);
+//		model.addAttribute("findArtList", "ok");
+		return "artboard/list";		
+	}
+	
+	@GetMapping("/myPage")
+	public String myPage(HttpServletRequest request,Model model) {
+		setLoginCAttribute(model, request);
+		String userId=(String) session.getAttribute("userId");
+		System.out.println("세션에 저장된값"+userId);
+		model.addAttribute("user", memberService.memberOneSelect(userId));
+		return "login/myPage";		
+	}
+	
+	@PostMapping("/userUpdate")
+	public String myPage(HttpServletRequest request,Model model, Member member) {
+		System.out.println("업데이트 대상:"+member);
+		memberService.memberUpdat(member);
+		return "redirect:/myPage";
 	}
 }

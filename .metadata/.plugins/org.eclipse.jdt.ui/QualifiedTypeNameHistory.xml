@@ -47,7 +47,6 @@
     <fullyQualifiedTypeName name="com.mohaji.repository.ArtboardMapper"/>
     <fullyQualifiedTypeName name="com.mohaji.service.ArtboardService"/>
     <fullyQualifiedTypeName name="com.mohaji.model.Artboard"/>
-    <fullyQualifiedTypeName name="com.mohaji.service.LikelistService"/>
     <fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
     <fullyQualifiedTypeName name="com.mohaji.service.LoginCheckService"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PostMapping"/>
@@ -60,4 +59,5 @@
     <fullyQualifiedTypeName name="com.mohaji.repository.MemberMapper"/>
     <fullyQualifiedTypeName name="lombok.Getter"/>
     <fullyQualifiedTypeName name="lombok.NoArgsConstructor"/>
+    <fullyQualifiedTypeName name="com.mohaji.service.LikelistService"/>
 </qualifiedTypeNameHistroy>

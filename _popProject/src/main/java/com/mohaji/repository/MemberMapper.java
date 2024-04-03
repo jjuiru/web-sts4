@@ -27,16 +27,15 @@ public interface MemberMapper {
 			+ "#{userId}, #{pass}, #{email} , #{uname}, NOW(), #{updateDay}, #{phoneNum}, #{birth},#{gender},#{uevent} )")       
 	void insertMember(Member member);
 
-	@Update("UPDATE member SET PASS = #{pass},"
-		    +"EMAIL = #{email}, "
-		    +"UNAME = #{uname}, "
-		    +"UPDATE_DAY = NOW(), "
-		    +"PHONE_NUM = #{phoneNum}, "
-		    +"BIRTH = #{birth},"
-		    +"GENDER = #{gender},"
-		    +"UEVENT = #{uevent} "
-		+"WHERE USER_ID = #{userId}")
-	void updateMember();
+	@Update("UPDATE member SET PASS = #{pass}, "
+	        + "EMAIL = #{email}, "
+	        + "UNAME = #{uname}, "
+	        + "UPDATE_DAY = NOW(), "
+	        + "PHONE_NUM = #{phoneNum}, "
+	        + "BIRTH = #{birth}, "
+	        + "UEVENT = #{uevent} "
+	        + "WHERE USER_ID = #{userId}")
+	void updateMember(Member member);
 	
 	@Delete("delete from member where USER_ID= #{userId}")
     void deleteMember(String userId);
