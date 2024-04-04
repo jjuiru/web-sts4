@@ -10,16 +10,16 @@
 <style>
     .heart-btn {
         cursor: pointer;
-        color: black; /* 기본적으로 빨간색으로 설정 */
+        color: black; /* 기본적으로 검정으로 설정 */
     }
     .heart-btn.active {
-        color: #0000FF; /* 클릭되었을 때 파란색으로 변경 */
+        color:red; /* 클릭되었을 때 빨간색으로 변경 */
     }
 </style>
 </head>
 <body>
 <figure>
-    <img src="${pop.img}" alt="콘텐츠 이미지">
+    <img src="<c:url value='${pop.rink}' />" alt="콘텐츠 이미지">
     <!-- 제목 -->
     <h1>${pop.popName}</h1>
     <button class="heart-btn ${onOff == 'on' ? 'active' : ''}" onclick="toggleHeart(this, '${pop.popCode}')">
@@ -45,10 +45,11 @@
         // 버튼의 상태에 따라 리다이렉트
         if (button.classList.contains("active")) {
             // 버튼이 활성화된 상태일 때 (하트가 클릭된 상태)
-            window.location.href = "like?status=off&popCode=" + popCode; // popCode 값을 파라미터로 추가합니다.
+           window.location.href = "like?status=on&popCode=" + popCode; // popCode 값을 파라미터로 추가합니다.
         } else {
             // 버튼이 비활성화된 상태일 때 (하트가 클릭되지 않은 상태)
-            window.location.href = "like?status=on&popCode=" + popCode; // popCode 값을 파라미터로 추가합니다.
+             window.location.href = "like?status=off&popCode=" + popCode; // popCode 값을 파라미터로 추가합니다.
+            
         }
     }
 </script>

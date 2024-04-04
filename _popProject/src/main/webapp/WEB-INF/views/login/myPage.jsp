@@ -10,8 +10,9 @@
 <body>
     <h1>마이페이지</h1>
     <ul>
-        <li><a href="#userInfo">내 정보</a></li>
-        <li><a href="#myPopups">나의 팝업</a></li>
+        <li><a  onclick="showUserInfo()">내 정보</a></li>
+        <li><a  onclick="showMyPopups()">나의 팝업</a></li>
+         <li><a  href="date">나의 팝업</a></li>
     </ul>
 
     <!-- 내 정보 -->
@@ -44,11 +45,25 @@
 	</div>
     </div>
 
-    <!-- 나의 팝업 -->
+    <!-- 나의 팝업 메뉴 클릭시 -->
     <div id="myPopups">
         <h2>나의 팝업</h2>
-        <!-- 여기에 좋아요를 눌렀던 팝업 리스트를 출력하는 코드를 작성 -->
+        <!-- 여기에 좋아요를 눌렀던 팝업 리스트를 출력하는 코드를 작성예정 -->
         <!-- 예시로 팝업 제목과 내용을 리스트 형태로 출력하는 코드를 작성 -->
+        		<article>
+			<table>
+				<c:forEach var="myList" items="${myList}">
+					<tr onclick="window.location.href='/view?popCode=${myList.popCode}';"
+						style="cursor: pointer;">
+						<th><img src="<c:url value='${myList.rink}' />" alt="콘텐츠 이미지"></th>
+						<td>${myList.popName}</td>
+						<td>${myList.startDay}</td>
+						<td>${myList.endDay}</td>
+					</tr>
+				</c:forEach>
+			</table>
+
+		</article>
         <ul>
         </ul>
     </div>
@@ -72,6 +87,8 @@
 		//----------------페이지 새로고침시 이전의 상태정보를 받아온다--------------------------
 	  //페이지 실행시 해당 값들이 있다면 해당하는 id 의 input 칸에 받아온 value를 넣는다.
 		    window.onload = function() {
+		    showUserInfo();
+			
 		var userIdValue = "${user.userId}";
         var passValue = "${user.pass}";
         var emailValue = "${user.email}";
@@ -102,6 +119,16 @@
             document.getElementById("birth").value = birthValue;
         }
     };
+
+    function showUserInfo() {
+        document.getElementById("userInfo").style.display = "block";
+        document.getElementById("myPopups").style.display = "none";
+    }
+
+    function showMyPopups() {
+        document.getElementById("userInfo").style.display = "none";
+        document.getElementById("myPopups").style.display = "block";
+    }
 	</script>
 </body>
 </html>

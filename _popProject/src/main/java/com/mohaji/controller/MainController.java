@@ -165,10 +165,11 @@ public class MainController {
 	}
 	
 	@GetMapping("/artlist")
-	public String artlist(HttpServletRequest request,Model model, String findArtList) {
+	public String artList(HttpServletRequest request,Model model) {
+		System.out.println(artboardService.artboardList());
 		setLoginCAttribute(model, request);
-//		model.addAttribute("findArtList", "ok");
-		return "artboard/list";		
+		model.addAttribute("artlist", artboardService.artboardList());	
+		return "artboard/list";
 	}
 	
 	@GetMapping("/myPage")
@@ -177,8 +178,11 @@ public class MainController {
 		String userId=(String) session.getAttribute("userId");
 		System.out.println("세션에 저장된값"+userId);
 		model.addAttribute("user", memberService.memberOneSelect(userId));
+		model.addAttribute("myList", likelistService.MylikeList(userId));
+	
 		return "login/myPage";		
 	}
+
 	
 	@PostMapping("/userUpdate")
 	public String myPage(HttpServletRequest request,Model model, Member member) {
@@ -186,4 +190,10 @@ public class MainController {
 		memberService.memberUpdat(member);
 		return "redirect:/myPage";
 	}
+	@GetMapping("/date")
+	public String date(HttpServletRequest request,Model model, Member member) {
+		setLoginCAttribute(model, request);
+		return "login/date";
+	}
+
 }

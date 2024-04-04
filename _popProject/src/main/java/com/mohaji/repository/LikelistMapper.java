@@ -21,10 +21,10 @@ public interface LikelistMapper {
 	@Select("select * from likelist")
 	List<Likelist> selectAllLikelist();
 	
-	@Select("SELECT a.POP_NAME, a.START_DAY, a.END_DAY, a.CONTENT "
-			+ "FROM likelist l "
-			+ "JOIN artboard a ON l.POP_CODE = a.POP_CODE "
-			+ "WHERE l.USER_ID = #{userId};")
+	@Select("SELECT l.LIKE_CODE, l.USER_ID, l.POP_CODE, a.POP_NAME, a.START_DAY, a.END_DAY, a.CONTENT "
+	        + "FROM likelist l "
+	        + "JOIN artboard a ON l.POP_CODE = a.POP_CODE "
+	        + "WHERE l.USER_ID = #{userId};")
 	List<Likelist> selectUserLikelist(String userId);
 	
 	@Insert("INSERT INTO likelist (USER_ID,POP_CODE)"

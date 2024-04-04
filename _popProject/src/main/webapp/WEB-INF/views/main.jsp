@@ -46,7 +46,7 @@
 				<c:forEach var="list" items="${artlist}">
 					<tr onclick="window.location.href='/view?popCode=${list.popCode}';"
 						style="cursor: pointer;">
-						<th><img src="#" alt="콘텐츠 이미지"></th>
+						<th><img src="<c:url value='${list.rink}' />" alt="이미지 설명"></th>
 						<td>${list.popName}</td>
 						<td>${list.startDay}</td>
 						<td>${list.endDay}</td>
