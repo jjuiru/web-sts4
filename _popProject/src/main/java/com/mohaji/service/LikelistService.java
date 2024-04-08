@@ -22,6 +22,11 @@ public class LikelistService {
     @Autowired
     private ArtboardMapper artboardMapper;
     
+	public int countPopCode(String popCode){
+		int count=likelistMapper.countByPopCode(popCode);
+		return count;
+	}
+    
     public String insertDeleteLike(String status, String userId,String popCode) {
     	if(status.equals("off")) {
     		likelistMapper.deleteLikelist(userId, popCode);
@@ -45,7 +50,7 @@ public class LikelistService {
     	return "off";
     }
     
-    public List MylikeList (String userId){
+    public List mylikeList (String userId){
     	List<Likelist> list= likelistMapper.selectUserLikelist(userId);
     	System.out.println(list);
     	List<Artboard> myList=new ArrayList<>();
@@ -56,5 +61,10 @@ public class LikelistService {
     		}
     	return myList;
     	}
+    
+    public void mylikeListDelete (String userId, String popCode){
+    	likelistMapper.deleteLikelist(userId, popCode);
+    		}
     }
+
   

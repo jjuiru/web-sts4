@@ -33,6 +33,4 @@ public interface ArtboardMapper {
 	@Delete("delete from artboard where POP_CODE= #{popCode}")
     void deleteArtboard(String artCode);
 	
-
-
 }

@@ -15,8 +15,8 @@ import com.mohaji.model.Likelist;
 @Mapper
 public interface LikelistMapper {
 	
-	@Select("select count(*) from likelist")
-	int count();
+	@Select("SELECT COUNT(*) FROM likelist WHERE pop_code = #{popCode}")
+	int countByPopCode(String popCode);
 	
 	@Select("select * from likelist")
 	List<Likelist> selectAllLikelist();

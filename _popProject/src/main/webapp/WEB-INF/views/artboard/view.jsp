@@ -22,6 +22,7 @@
     <img src="<c:url value='${pop.rink}' />" alt="콘텐츠 이미지">
     <!-- 제목 -->
     <h1>${pop.popName}</h1>
+        <p>${count}</p>
     <button class="heart-btn ${onOff == 'on' ? 'active' : ''}" onclick="toggleHeart(this, '${pop.popCode}')">
         <i class="far fa-heart"></i> <!-- 빈 하트 아이콘 -->
     </button>
@@ -39,6 +40,14 @@
 <!-- Font Awesome 스크립트 CDN 링크 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
 <script>
+window.onload = function() {
+    var textValue = "${text}";
+
+    if (textValue === 'on') {
+        alert('로그인 후 이용해 주세요.');
+        window.location.href = '/loginPage';
+    }
+};
     function toggleHeart(button, popCode) {
         button.classList.toggle("active"); // 버튼에 active 클래스를 toggle하여 버튼의 색상을 변경합니다.
         
@@ -48,8 +57,7 @@
            window.location.href = "like?status=on&popCode=" + popCode; // popCode 값을 파라미터로 추가합니다.
         } else {
             // 버튼이 비활성화된 상태일 때 (하트가 클릭되지 않은 상태)
-             window.location.href = "like?status=off&popCode=" + popCode; // popCode 값을 파라미터로 추가합니다.
-            
+             window.location.href = "like?status=off&popCode=" + popCode; // popCode 값을 파라미터로 추가합니다.           
         }
     }
 </script>

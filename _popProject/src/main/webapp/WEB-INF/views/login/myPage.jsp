@@ -59,7 +59,14 @@
 						<td>${myList.popName}</td>
 						<td>${myList.startDay}</td>
 						<td>${myList.endDay}</td>
-					</tr>
+						<td>
+					<form action="likeDelete" method="get">
+                    <input type="hidden" name="popCode" value="${myList.popCode}">
+                    <input type="hidden" name="userId" value="${userId}">
+                    <input type="submit" value="삭제">
+                </form>
+						</td>
+					</tr>					
 				</c:forEach>
 			</table>
 
@@ -117,6 +124,10 @@
         }
         if (birthValue) {
             document.getElementById("birth").value = birthValue;
+        }
+        var popDelValue = "${popDel}"; // popDel 값 받아오기
+        if (popDelValue === "on") { // popDel 값이 "on"인 경우
+            showMyPopups(); // showMyPopups() 함수 실행
         }
     };
 
