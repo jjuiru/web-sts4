@@ -18,6 +18,14 @@
 </style>
 </head>
 <body>
+	<article>
+		<div>
+			<h1>
+				<a href="main">MOHAJIPOP!</a>
+			</h1>
+			<h3>서울 팝업 전시 모두 모여라</h3>
+		</div>
+	</article>
 <figure>
     <img src="<c:url value='${pop.rink}' />" alt="콘텐츠 이미지">
     <!-- 제목 -->
@@ -36,6 +44,37 @@
     <div id="map"></div>
     <!-- 링크 -->
     <a href="${rink}">${rink}</a>
+    
+<a  onclick="showboard()">review</a>
+    <div style="display: none;" id="showboard">
+        <table>
+            <c:forEach var="board" items="${popBoard}">
+                <tr>
+                    <td>${board.star}</td>
+                    <td>${board.userId}</td>
+                    <td>${board.title}</td>
+                    <td>${board.content}</td>
+                    <td>${board.regtime}</td>
+                    <td hidden>${board.num}</td>
+                    <td hidden>${board.popCode}</td>
+                </tr>
+            </c:forEach>
+        </table>
+
+    <form id ="boardForm" action="insertPopbard" method= "post">
+        <input hidden type="text" id="num" name="num" value="">
+        <input hidden type="text" id="userId" name="userId" value="${userId}">
+        <input hidden type="text" id="popCode" name="popCode" value="${pop.popCode}">
+        
+        <label>작성자 ${userId}</label>
+        <input type="text" id="title" name="title" value="">
+        <input type="text" id="content" name="content" value=""><br>
+        <button type="button">등록</button>
+        <button type="button">삭제</button>
+    </form>
+		</div>
+		
+
 </figure>
 <!-- Font Awesome 스크립트 CDN 링크 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
@@ -59,6 +98,15 @@ window.onload = function() {
             // 버튼이 비활성화된 상태일 때 (하트가 클릭되지 않은 상태)
              window.location.href = "like?status=off&popCode=" + popCode; // popCode 값을 파라미터로 추가합니다.           
         }
+    }
+    function showboard() {
+        var showboardElement = document.getElementById("showboard");
+        if (showboardElement.style.display === "none") {
+            showboardElement.style.display = "block";
+        } else {
+            showboardElement.style.display = "none";
+        }
+        
     }
 </script>
 </body>

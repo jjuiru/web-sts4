@@ -16,6 +16,8 @@ import com.mohaji.service.ArtboardService;
 import com.mohaji.service.LikelistService;
 import com.mohaji.service.LoginCheckService;
 import com.mohaji.service.MemberService;
+import com.mohaji.service.PopboardService;
+
 import javax.servlet.http.HttpServletRequest;
 
 
@@ -34,6 +36,9 @@ public class MainController {
 	
 	@Autowired
 	LoginCheckService loginCheckService;
+	
+	@Autowired
+	PopboardService popboardService;
 	
 	//----------세션을 사용해 로그인 여부와 userId 값을 리턴(모든 로그인 체크에 사용가능) -------------
 	HttpSession session;
@@ -69,6 +74,7 @@ public class MainController {
 		setLoginCAttribute(model, request);//loginC,userId 반환
 		model.addAttribute("pop",artboardService.artboardSelectCode(popCode));
 		model.addAttribute("count", likelistService.countPopCode(popCode));
+		model.addAttribute("popBoard",popboardService.selectPopboard(popCode));
 		String userId=(String) session.getAttribute("userId");
 		if(userId==null) {
 			model.addAttribute("onOff", "off");
@@ -85,6 +91,7 @@ public class MainController {
 	public String like(Model model, String status, String popCode, HttpServletRequest request) {
 		setLoginCAttribute(model, request); //loginC,userId 반환
 		model.addAttribute("pop",artboardService.artboardSelectCode(popCode)); //선택한 팝업 띄우기
+		model.addAttribute("popBoard",popboardService.selectPopboard(popCode));
 		String userId=(String) session.getAttribute("userId"); //세션에서 유저 아이디 반환
 		if(userId==null) { //아이디가 없을 경우(로그인이 아닐 경우
 		model.addAttribute("text", "on");	
@@ -228,4 +235,7 @@ public class MainController {
 		setLoginCAttribute(model, request); //loginC,userId 반환
 		return "login/date";
 	}
+	//---------댓글 기능-----------------------------
+	
+	
 }

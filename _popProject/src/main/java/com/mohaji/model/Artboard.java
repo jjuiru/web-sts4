@@ -21,6 +21,6 @@ public class Artboard {
 	private String endDay;
 	private String content;
 	private String rink;
-	private String img;
+	private String weblink;
 	private String place;
 }

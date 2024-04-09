@@ -8,6 +8,14 @@
     <title>팝업페이지</title>
 </head>
 <body>
+	<article>
+		<div>
+			<h1>
+				<a href="main">MOHAJIPOP!</a>
+			</h1>
+			<h3>서울 팝업 전시 모두 모여라</h3>
+		</div>
+	</article>
     <h1>팝업페이지</h1>
     <ul>
         <li><a href="myPage">내 정보</a></li>

@@ -8,6 +8,14 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<article>
+		<div>
+			<h1>
+				<a href="main">MOHAJIPOP!</a>
+			</h1>
+			<h3>서울 팝업 전시 모두 모여라</h3>
+		</div>
+	</article>
 	<form action="login" method="post" onsubmit="return validateForm()">
 		<h1 class="h3 mb-3 fw-normal">로그인</h1>
 		<div class="form-floating">
@@ -38,7 +46,7 @@
 	<div>
 		<button style="margin-bottom: 10px; border-radius: 10px;"
 			class="btn btn-sm btn-outline-secondary w-100 py-2"
-			onclick="location.href='signIn'">Sign in</button>
+			onclick="location.href='signUpPage'">Sign Up</button>
 	</div>
 
 	<div>

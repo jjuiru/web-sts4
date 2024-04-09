@@ -22,11 +22,11 @@ public interface ArtboardMapper {
 	@Select("select * from artboard where POP_CODE =#{popCode}")
 	Artboard selectOneArtboard(String popCode);
 	
-	@Insert("INSERT INTO artboard (POP_CODE, POP_NAME, START_DAY, END_DAY, content, img, rink, place)"
-			+ "VALUES (#{popCode}, #{popName}, #{startDay} , #{endDay}, #{content}, #{img}, #{rink}, #{place} )")       
+	@Insert("INSERT INTO artboard (POP_CODE, POP_NAME, START_DAY, END_DAY, content, weblink, rink, place)"
+			+ "VALUES (#{popCode}, #{popName}, #{startDay} , #{endDay}, #{content}, #{weblink}, #{rink}, #{place} )")       
 	void insertArtboard(Artboard artboard);
 
-	@Update("UPDATE artboard set POP_NAME= #{popName}, START_DAY= #{startDay}, END_DAY= #{endDay}, content=#{content}, img= #{img}, rink= #{rink}, place= #{place}"
+	@Update("UPDATE artboard set POP_NAME= #{popName}, START_DAY= #{startDay}, END_DAY= #{endDay}, weblink=#{weblink} content=#{content}, img= #{img}, rink= #{rink}, place= #{place}"
 			           +"where POP_CODE= #{popCode}")
 	void updateArtboard();
 	
