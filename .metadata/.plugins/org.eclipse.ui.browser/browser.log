@@ -86,3 +86,6 @@
 4월 09, 2024 19:06:58.64 [20428:18364:0409/190658.603:ERROR:connection_factory_impl.cc(434)] Failed to connect to MCS endpoint with error -106
 4월 09, 2024 19:12:15.55 INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
 4월 09, 2024 20:15:43.41 INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+
+4월 11, 2024 19:16:33.77 NEW SESSION
+4월 11, 2024 19:16:33.79 INFO: Created TensorFlow Lite XNNPACK delegate for CPU.

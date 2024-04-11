@@ -13,9 +13,16 @@
         color: black; /* 기본적으로 검정으로 설정 */
     }
     .heart-btn.active {
-        color:red; /* 클릭되었을 때 빨간색으로 변경 */
+        color: red; /* 클릭되었을 때 빨간색으로 변경 */
     }
-</style>
+    .fas.fa-star {
+        cursor: pointer;
+          color: white; /* 비활성화된 별의 색상 */
+}
+.fas.fa-star.active {
+    color: yellow; /* 활성화된 별의 색상 */
+}
+    </style>
 </head>
 <body>
 	<article>
@@ -34,51 +41,73 @@
     <button class="heart-btn ${onOff == 'on' ? 'active' : ''}" onclick="toggleHeart(this, '${pop.popCode}')">
         <i class="far fa-heart"></i> <!-- 빈 하트 아이콘 -->
     </button>
-    <!-- 장소 -->
     <p>장소: ${pop.place}</p>
-    <!-- 기간 -->
     <p>기간: ${pop.startDay} - ${pop.endDay}</p>
-    <!-- 컨텐츠 내용 -->
     <p>${pop.content}</p>
-    <!-- 지도 API -->
     <div id="map"></div>
-    <!-- 링크 -->
     <a href="${rink}">${rink}</a>
     
-<a  onclick="showboard()">review</a>
+<a  onclick="showboard()" style="cursor: pointer;">review</a>
     <div style="display: none;" id="showboard">
-        <table>
-            <c:forEach var="board" items="${popBoard}">
-                <tr>
-                    <td>${board.star}</td>
-                    <td>${board.userId}</td>
-                    <td>${board.title}</td>
-                    <td>${board.content}</td>
-                    <td>${board.regtime}</td>
-                    <td hidden>${board.num}</td>
-                    <td hidden>${board.popCode}</td>
-                </tr>
-            </c:forEach>
-        </table>
-
-    <form id ="boardForm" action="insertPopbard" method= "post">
-        <input hidden type="text" id="num" name="num" value="">
-        <input hidden type="text" id="userId" name="userId" value="${userId}">
-        <input hidden type="text" id="popCode" name="popCode" value="${pop.popCode}">
+  <table>
+        <c:forEach var="board" items="${popBoard}" >
+            <tr onclick="fillForm(this)" style="cursor: pointer;"> <!-- 댓글을 클릭했을 때 fillForm 함수 호출 -->
+                <td>
+                    <div id="stars-${board.num}">
+                        <script>
+                            var starCount = parseInt("${board.star}");
+                            var starHtml = '';
+                            for (var i = 0; i < starCount; i++) {
+                                starHtml += '<i class="fas fa-star active"></i>';
+                            }
+                            document.write(starHtml);
+                        </script>
+                    </div>
+                </td>
+                <td>${board.userId}</td>
+                <td>${board.title}</td>
+                <td>${board.content}</td>
+                <td>${board.regtime}</td>
+                <td hidden>${board.num}</td>
+                <td hidden>${board.popCode}</td>
+            </tr>
+        </c:forEach>
+    </table>
         
-        <label>작성자 ${userId}</label>
-        <input type="text" id="title" name="title" value="">
-        <input type="text" id="content" name="content" value=""><br>
-        <button type="button">등록</button>
-        <button type="button">삭제</button>
-    </form>
-		</div>
-		
-
+<form id="boardForm" action="insertPopbard" method="post">
+    <input hidden type="text" id="num" name="num" >
+    <input hidden type="text" id="userId" name="userId" >
+    <input hidden type="text" id="popCode" name="popCode" >
+    <label>작성자 ${userId}</label>
+<div >
+ <!--  별점시스템 들어갈 공간 -->
+</div>
+    제목<input type="text" id="title" name="title" ><br>
+    내용<input type="text" id="content" name="content" ><br>
+    <button type="submit">등록</button>
+    <button type="button">삭제</button>
+</form>
+</div>		
 </figure>
 <!-- Font Awesome 스크립트 CDN 링크 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
 <script>
+// 댓글을 클릭할 때 호출되는 함수
+function fillForm(row) {
+    // 클릭한 댓글의 각 셀에서 값을 가져옵니다.
+    var clickedUserId = row.cells[1].innerText;
+    var title = row.cells[2].innerText;
+    var content = row.cells[3].innerText;
+    var num = row.cells[5].innerText;
+    var popCode = row.cells[6].innerText;
+
+    // 폼에 가져온 값을 채워 넣습니다.
+    document.getElementById("userId").value = clickedUserId;
+    document.getElementById("title").value = title;
+    document.getElementById("content").value = content;
+    document.getElementById("num").value = num;
+    document.getElementById("popCode").value = popCode;
+}
 window.onload = function() {
     var textValue = "${text}";
 
