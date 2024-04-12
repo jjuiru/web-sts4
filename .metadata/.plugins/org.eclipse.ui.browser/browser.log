@@ -89,3 +89,24 @@
 
 4월 11, 2024 19:16:33.77 NEW SESSION
 4월 11, 2024 19:16:33.79 INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+
+4월 12, 2024 08:59:43.27 NEW SESSION
+4월 12, 2024 08:59:43.29 INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+4월 12, 2024 11:19:54.26 [7464:8416:0412/111954.266:ERROR:interface_endpoint_client.cc(707)] Message 5 rejected by interface blink.mojom.WidgetHost
+4월 12, 2024 12:21:38.10 [7464:8416:0412/122138.100:ERROR:interface_endpoint_client.cc(707)] Message 5 rejected by interface blink.mojom.WidgetHost
+4월 12, 2024 16:16:53.48 [7464:2764:0412/161653.479:ERROR:connection_factory_impl.cc(483)] ConnectionHandler failed with net error: -2
+4월 12, 2024 16:18:35.13 [7464:2764:0412/161835.131:ERROR:connection_factory_impl.cc(434)] Failed to connect to MCS endpoint with error -106
+4월 12, 2024 16:18:35.59 [7464:2764:0412/161835.592:ERROR:connection_factory_impl.cc(434)] Failed to connect to MCS endpoint with error -106
+4월 12, 2024 18:11:32.91 [7464:2764:0412/181132.911:ERROR:connection_factory_impl.cc(483)] ConnectionHandler failed with net error: -2
+4월 12, 2024 18:53:41.00 [7464:2764:0412/185341.005:ERROR:connection_factory_impl.cc(483)] ConnectionHandler failed with net error: -2
+4월 12, 2024 18:53:43.02 [7464:2764:0412/185343.022:ERROR:connection_factory_impl.cc(434)] Failed to connect to MCS endpoint with error -106
+4월 12, 2024 19:18:38.60 [7464:2764:0412/191838.609:ERROR:connection_factory_impl.cc(483)] ConnectionHandler failed with net error: -2
+4월 12, 2024 19:21:04.05 [7464:2764:0412/192104.056:ERROR:connection_factory_impl.cc(434)] Failed to connect to MCS endpoint with error -106
+4월 12, 2024 19:21:04.48 [7464:2764:0412/192104.481:ERROR:connection_factory_impl.cc(434)] Failed to connect to MCS endpoint with error -106
+4월 12, 2024 20:00:01.74 [7464:2764:0412/200001.741:ERROR:connection_factory_impl.cc(483)] ConnectionHandler failed with net error: -2
+4월 12, 2024 21:00:29.94 [7464:2764:0412/210029.942:ERROR:connection_factory_impl.cc(483)] ConnectionHandler failed with net error: -2
+4월 12, 2024 21:00:31.95 [7464:2764:0412/210031.957:ERROR:connection_factory_impl.cc(434)] Failed to connect to MCS endpoint with error -106
+4월 12, 2024 21:00:32.90 [7464:18524:0412/210031.958:ERROR:get_updates_processor.cc(263)] PostClientToServerMessage() failed during GetUpdates with error Network error (ERR_INTERNET_DISCONNECTED)
+4월 12, 2024 21:27:28.20 [7464:2764:0412/212728.204:ERROR:connection_factory_impl.cc(483)] ConnectionHandler failed with net error: -2
+4월 12, 2024 21:27:35.00 [7464:2764:0412/212735.003:ERROR:connection_factory_impl.cc(434)] Failed to connect to MCS endpoint with error -106
+4월 12, 2024 21:27:36.43 [7464:2764:0412/212735.499:ERROR:connection_factory_impl.cc(434)] Failed to connect to MCS endpoint with error -106

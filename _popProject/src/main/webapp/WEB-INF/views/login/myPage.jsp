@@ -6,6 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>마이페이지</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
 	<article>
@@ -20,7 +21,8 @@
     <ul>
         <li><a  onclick="showUserInfo()">내 정보</a></li>
         <li><a  onclick="showMyPopups()">나의 팝업</a></li>
-         <li><a  href="date">나의 팝업</a></li>
+        <li><a  onclick="showMyBoard()">리뷰관리</a></li>
+         <li><a  href="date">스케줄</a></li>
     </ul>
 
     <!-- 내 정보 -->
@@ -77,11 +79,42 @@
 					</tr>					
 				</c:forEach>
 			</table>
-
 		</article>
-        <ul>
-        </ul>
     </div>
+    
+    <div style="display: none;" id="myBoard">
+    <h3>내가 쓴 리뷰</h3>
+  <table>
+        <c:forEach var="board" items="${popBoard}" >
+            <tr>
+                <td>
+                    <div id="stars-${board.num}" style="color: yellow">
+                        <script>
+                            var starCount = parseInt("${board.star}");
+                            var starHtml = '';
+                            for (var i = 0; i < starCount; i++) {
+                                starHtml += '<i class="fas fa-star active"></i>';
+                            }
+                            document.write(starHtml);
+                        </script>
+                    </div>
+                </td>
+                <td>${board.userId}</td>
+                <td>${board.title}</td>
+                <td>${board.content}</td>
+                <td>${board.regtime}</td>
+                <td hidden>${board.num}</td>
+                <td hidden>${board.popCode}</td>
+                <c:if test="${sessionScope.userId eq board.userId}">
+    <td><button onclick="window.location.href='/delMyPopboard?num=${board.num}&popCode=${popCode}'">삭제</button></td>
+</c:if>
+            </tr>
+        </c:forEach>
+    </table>
+    
+    </div>
+    
+    
     <script>
 		//---------회원가입 버튼을 눌렀을 경우 실행되는 코드-----------
 		function register() {
@@ -137,16 +170,27 @@
         if (popDelValue === "on") { // popDel 값이 "on"인 경우
             showMyPopups(); // showMyPopups() 함수 실행
         }
+        if (popDelValue === "off") { // popDel 값이 "on"인 경우
+        	showMyBoard(); // showMyPopups() 함수 실행
+        }
     };
 
     function showUserInfo() {
         document.getElementById("userInfo").style.display = "block";
         document.getElementById("myPopups").style.display = "none";
+        document.getElementById("myBoard").style.display = "none";
     }
 
     function showMyPopups() {
         document.getElementById("userInfo").style.display = "none";
         document.getElementById("myPopups").style.display = "block";
+        document.getElementById("myBoard").style.display = "none";
+    }
+    
+    function showMyBoard() {
+    	document.getElementById("userInfo").style.display = "none";
+        document.getElementById("myPopups").style.display = "none";
+        document.getElementById("myBoard").style.display = "block";
     }
 	</script>
 </body>

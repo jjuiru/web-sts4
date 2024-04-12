@@ -2,15 +2,13 @@ package com.mohaji.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Setter
-@Getter
-@ToString
+@Getter   
 @AllArgsConstructor
-@NoArgsConstructor
+@ToString 
 public class Popboard {
 
 		private Long num;
@@ -19,6 +17,6 @@ public class Popboard {
 		private String title;
 		private String content;
 		private int star;
-		private String regtime;	
-
+		private String regtime;
+		
 }

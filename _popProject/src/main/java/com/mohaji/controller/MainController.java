@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mohaji.model.Member;
+import com.mohaji.model.Popboard;
 import com.mohaji.service.ArtboardService;
 import com.mohaji.service.LikelistService;
 import com.mohaji.service.LoginCheckService;
@@ -72,9 +73,11 @@ public class MainController {
 	@GetMapping("/view")
 	public String view(Model model, String popCode, HttpServletRequest request) {
 		setLoginCAttribute(model, request);//loginC,userId 반환
+		model.addAttribute("popCode",popCode);
 		model.addAttribute("pop",artboardService.artboardSelectCode(popCode));
 		model.addAttribute("count", likelistService.countPopCode(popCode));
 		model.addAttribute("popBoard",popboardService.selectPopboard(popCode));
+		model.addAttribute("val", String.valueOf(popboardService.starsValue(popCode)));
 		String userId=(String) session.getAttribute("userId");
 		if(userId==null) {
 			model.addAttribute("onOff", "off");
@@ -208,6 +211,7 @@ public class MainController {
 		System.out.println("세션에 저장된값"+userId);
 		model.addAttribute("user", memberService.memberOneSelect(userId));
 		model.addAttribute("myList", likelistService.mylikeList(userId));
+		model.addAttribute("popBoard",popboardService.selectIdPopboard(userId));
 	
 		return "login/myPage";		
 	}
@@ -229,13 +233,32 @@ public class MainController {
 	}
 	
 	
-	//----------행사 일정표 확인----------------------
+	//----------나의 행사 일정표 확인----------------------
 	@GetMapping("/date")
 	public String date(HttpServletRequest request,Model model, Member member) {
 		setLoginCAttribute(model, request); //loginC,userId 반환
 		return "login/date";
 	}
-	//---------댓글 기능-----------------------------
+	//----------나의 댓글 관리----------------------------
+	@GetMapping("/delMyPopboard")
+	public String delMyPopboard(HttpServletRequest request,RedirectAttributes redirectAttributes, Model model,String num, String popCode) {
+		popboardService.deletePopboard(Long.parseLong(num));
+		model.addAttribute("popDel", "off");
+		redirectAttributes.addFlashAttribute("popDel", "off");
+		return "redirect:/myPage" ;	
+	}
 	
+	//-------------댓글 기능-----------------------------	
+	@PostMapping("/insertPopbard")
+	public String insertPopboard(HttpServletRequest request, Model model,Popboard popboard) {
+		popboardService.insertPopboard(popboard);
+		return "redirect:/view?popCode=" + popboard.getPopCode();	
+	}
+	
+	@GetMapping("/deletePopboard")
+	public String deletePopboard(HttpServletRequest request, Model model,String num, String popCode) {
+		popboardService.deletePopboard(Long.parseLong(num));
+		return "redirect:/view?popCode=" + popCode;	
+	}
 	
 }

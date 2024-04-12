@@ -23,8 +23,11 @@ public interface PopboardMapper {
 		@Select("select * from popboard where POP_CODE=#{popCode}")
 		List<Popboard> selectPopboard(String popCode);
 		
-		@Insert("INSERT INTO popbard (USER_ID,POP_CODE,title,content,star)"
-				+ "VALUES (#{userId}, #{popCode}), #{title}),#{content}),#{star})")       
+		@Select("select * from popboard where USER_ID=#{userId}")
+		List<Popboard> selectIdPopboard(String userId);
+		
+		@Insert("INSERT INTO popboard (USER_ID,POP_CODE,title,content,star)"
+				+ "VALUES (#{userId}, #{popCode}, #{title},#{content},#{star})")       
 		void insertPopboard(Popboard popboard);
 		
 		@Delete("delete from popboard where num= #{num}")
@@ -36,7 +39,5 @@ public interface PopboardMapper {
 		        + "regtime = NOW() "
 		        + "WHERE num = #{num}")
 		void updatePopboard(Popboard popboard);
-
-	
 		
 }

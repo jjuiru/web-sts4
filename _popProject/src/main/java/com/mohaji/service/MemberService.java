@@ -39,4 +39,6 @@ public class MemberService {
 		memberMapper.updateMember(member);
 		return true;
 	}
+	
+	
 }

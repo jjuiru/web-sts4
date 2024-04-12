@@ -15,13 +15,6 @@
     .heart-btn.active {
         color: red; /* 클릭되었을 때 빨간색으로 변경 */
     }
-    .fas.fa-star {
-        cursor: pointer;
-          color: white; /* 비활성화된 별의 색상 */
-}
-.fas.fa-star.active {
-    color: yellow; /* 활성화된 별의 색상 */
-}
     </style>
 </head>
 <body>
@@ -45,15 +38,16 @@
     <p>기간: ${pop.startDay} - ${pop.endDay}</p>
     <p>${pop.content}</p>
     <div id="map"></div>
-    <a href="${rink}">${rink}</a>
+    <a href="${pop.weblink}">${pop.weblink}</a><br>
     
 <a  onclick="showboard()" style="cursor: pointer;">review</a>
     <div style="display: none;" id="showboard">
   <table>
+                 <lable>평균 ${val} 점</lable>
         <c:forEach var="board" items="${popBoard}" >
             <tr onclick="fillForm(this)" style="cursor: pointer;"> <!-- 댓글을 클릭했을 때 fillForm 함수 호출 -->
                 <td>
-                    <div id="stars-${board.num}">
+                    <div id="stars-${board.num}" style="color: yellow">
                         <script>
                             var starCount = parseInt("${board.star}");
                             var starHtml = '';
@@ -70,27 +64,50 @@
                 <td>${board.regtime}</td>
                 <td hidden>${board.num}</td>
                 <td hidden>${board.popCode}</td>
+                <c:if test="${sessionScope.userId eq board.userId}">
+    <td><button onclick="window.location.href='/deletePopboard?num=${board.num}&popCode=${popCode}'">삭제</button></td>
+</c:if>
             </tr>
         </c:forEach>
     </table>
         
 <form id="boardForm" action="insertPopbard" method="post">
     <input hidden type="text" id="num" name="num" >
-    <input hidden type="text" id="userId" name="userId" >
-    <input hidden type="text" id="popCode" name="popCode" >
+    <input hidden type="text" id="userId" name="userId" value="${userId}">
+    <input hidden type="text" id="popCode" name="popCode" value="${popCode}">
     <label>작성자 ${userId}</label>
-<div >
- <!--  별점시스템 들어갈 공간 -->
-</div>
+ <div id="stars">
+        <input type="radio" id="star1" name="star" value="1">
+        <label for="star1">1</label>
+        <input type="radio" id="star2" name="star" value="2">
+        <label for="star2">2</label>
+        <input type="radio" id="star3" name="star" value="3">
+        <label for="star3">3</label>
+        <input type="radio" id="star4" name="star" value="4">
+        <label for="star4">4</label>
+        <input type="radio" id="star5" name="star" value="5">
+        <label for="star5">5</label>
+    </div>
+    <input type="hidden" id="selectedStar" name="selectedStar">
+
+<input type="hidden" id="star" name="star">
     제목<input type="text" id="title" name="title" ><br>
     내용<input type="text" id="content" name="content" ><br>
     <button type="submit">등록</button>
-    <button type="button">삭제</button>
 </form>
 </div>		
 </figure>
 <!-- Font Awesome 스크립트 CDN 링크 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+<script>
+    const stars = document.querySelectorAll('input[name="star"]');
+
+    stars.forEach((star) => {
+        star.addEventListener('click', function() {
+            document.getElementById('selectedStar').value = this.value;
+        });
+    });
+</script>
 <script>
 // 댓글을 클릭할 때 호출되는 함수
 function fillForm(row) {
