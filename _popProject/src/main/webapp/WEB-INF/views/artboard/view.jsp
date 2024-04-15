@@ -33,19 +33,20 @@
         <p>${count}</p>
     <button class="heart-btn ${onOff == 'on' ? 'active' : ''}" onclick="toggleHeart(this, '${pop.popCode}')">
         <i class="far fa-heart"></i> <!-- 빈 하트 아이콘 -->
-    </button>
+    </button> 
+    <a onclick="showboard(); scrollToBoardForm();" style="cursor: pointer;">review</a>
     <p>장소: ${pop.place}</p>
     <p>기간: ${pop.startDay} - ${pop.endDay}</p>
     <p>${pop.content}</p>
     <div id="map"></div>
     <a href="${pop.weblink}">${pop.weblink}</a><br>
     
-<a  onclick="showboard()" style="cursor: pointer;">review</a>
+
     <div style="display: none;" id="showboard">
   <table>
                  <lable>평균 ${val} 점</lable>
         <c:forEach var="board" items="${popBoard}" >
-            <tr onclick="fillForm(this)" style="cursor: pointer;"> <!-- 댓글을 클릭했을 때 fillForm 함수 호출 -->
+            <tr style="cursor: pointer;"> <!-- 댓글을 클릭했을 때 fillForm 함수 호출 -->
                 <td>
                     <div id="stars-${board.num}" style="color: yellow">
                         <script>
@@ -66,17 +67,46 @@
                 <td hidden>${board.popCode}</td>
                 <c:if test="${sessionScope.userId eq board.userId}">
     <td><button onclick="window.location.href='/deletePopboard?num=${board.num}&popCode=${popCode}'">삭제</button></td>
+    <td><button >수정</button></td>
 </c:if>
             </tr>
         </c:forEach>
     </table>
+    
+        <!-- 페이징하는 코드 시작 -->
+    <c:forEach var="comment" items="${comments}">
+    <!-- 각각의 댓글 출력 -->
+</c:forEach>
+
+<c:set var="currentPage" value="${page}" />
+<c:set var="totalPages" value="10" /> <!-- 예시로 총 페이지 수를 설정 -->
+
+<c:if test="${currentPage gt 0}">
+    <a href="?page=${currentPage - 1}">이전</a>
+</c:if>
+
+<c:forEach var="i" begin="0" end="${totalPages - 1}">
+    <c:choose>
+        <c:when test="${currentPage eq i}">
+            <span>${i + 1}</span>
+        </c:when>
+        <c:otherwise>
+            <a href="?page=${i}">${i + 1}</a>
+        </c:otherwise>
+    </c:choose>
+</c:forEach>
+
+<c:if test="${currentPage lt totalPages - 1}">
+    <a href="?page=${currentPage + 1}">다음</a>
+</c:if>
+    <!-- 페이징하는 코드 끝 -->
         
-<form id="boardForm" action="insertPopbard" method="post">
+<form id="boardForm" action="insertPopboard" method="post" onsubmit="return checkUserId()">
     <input hidden type="text" id="num" name="num" >
     <input hidden type="text" id="userId" name="userId" value="${userId}">
     <input hidden type="text" id="popCode" name="popCode" value="${popCode}">
     <label>작성자 ${userId}</label>
- <div id="stars">
+    <div id="stars">
         <input type="radio" id="star1" name="star" value="1">
         <label for="star1">1</label>
         <input type="radio" id="star2" name="star" value="2">
@@ -88,9 +118,9 @@
         <input type="radio" id="star5" name="star" value="5">
         <label for="star5">5</label>
     </div>
+    
     <input type="hidden" id="selectedStar" name="selectedStar">
-
-<input type="hidden" id="star" name="star">
+    <input type="hidden" id="star" name="star">
     제목<input type="text" id="title" name="title" ><br>
     내용<input type="text" id="content" name="content" ><br>
     <button type="submit">등록</button>
@@ -109,6 +139,15 @@
     });
 </script>
 <script>
+//댓글등록시 실행되는 함수
+function checkUserId() {
+    var userId = document.getElementById('userId').value;
+    if (userId === null || userId === '') {
+        alert('로그인 후 이용해주세요.');
+        return false; // 서브밋을 막습니다.
+    }
+    return true; // 폼을 제출합니다.
+}
 // 댓글을 클릭할 때 호출되는 함수
 function fillForm(row) {
     // 클릭한 댓글의 각 셀에서 값을 가져옵니다.
@@ -124,6 +163,16 @@ function fillForm(row) {
     document.getElementById("content").value = content;
     document.getElementById("num").value = num;
     document.getElementById("popCode").value = popCode;
+}
+//댓글 클릭시 스크롤이 자동으로 내려가게 하는 함수
+function scrollToBoardForm() {
+    var showboardElement = document.getElementById("showboard");
+    if (showboardElement && showboardElement.style.display === "block") {
+        var boardFormElement = document.getElementById("boardForm");
+        if (boardFormElement) {
+            boardFormElement.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
 }
 window.onload = function() {
     var textValue = "${text}";

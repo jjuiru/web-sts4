@@ -1,19 +1,28 @@
 package com.mohaji.controller;
 
+import java.util.List;
+
 import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.http.HttpSession;
+import javax.xml.stream.events.Comment;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.mohaji.model.Artboard;
 import com.mohaji.model.Member;
 import com.mohaji.model.Popboard;
 import com.mohaji.service.ArtboardService;
+import com.mohaji.service.CommentService;
 import com.mohaji.service.LikelistService;
 import com.mohaji.service.LoginCheckService;
 import com.mohaji.service.MemberService;
@@ -249,7 +258,7 @@ public class MainController {
 	}
 	
 	//-------------댓글 기능-----------------------------	
-	@PostMapping("/insertPopbard")
+	@PostMapping("/insertPopboard")
 	public String insertPopboard(HttpServletRequest request, Model model,Popboard popboard) {
 		popboardService.insertPopboard(popboard);
 		return "redirect:/view?popCode=" + popboard.getPopCode();	
@@ -259,6 +268,38 @@ public class MainController {
 	public String deletePopboard(HttpServletRequest request, Model model,String num, String popCode) {
 		popboardService.deletePopboard(Long.parseLong(num));
 		return "redirect:/view?popCode=" + popCode;	
+	}
+	
+	//------------- 팝업  검색기능 추가-----------------------------
+	
+	@GetMapping("/selectDate")
+	public String selectDate(HttpServletRequest request, Model model, String date) {
+		List<Artboard> val = artboardService.selDateArtboardList(date);
+		System.out.println(val);
+		if (val.isEmpty()) {
+
+		model.addAttribute("text" , "검색 결과가 없습니다."  );	
+		}else
+		model.addAttribute("list" , val );		
+		return "artboard/list";	
+	}
+	
+	@GetMapping("/keyword")
+	public String keyword(HttpServletRequest request, Model model, String keyword) {
+		List<Artboard> val = artboardService.selKeyArtboardList(keyword);
+		System.out.println(val);
+		if (val.isEmpty()) {
+
+			model.addAttribute("text" , "검색 결과가 없습니다."  );	
+			}else
+			model.addAttribute("list" , val );		
+			return "artboard/list";	
+	}
+	
+	@GetMapping("/selectAllList")
+	public String selectAllList(HttpServletRequest request, Model model, String keyword) {
+		model.addAttribute("list" , artboardService.artboardList());	
+			return "artboard/list";	
 	}
 	
 }

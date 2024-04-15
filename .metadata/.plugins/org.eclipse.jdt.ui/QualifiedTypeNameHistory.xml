@@ -31,13 +31,11 @@
     <fullyQualifiedTypeName name="org.junit.jupiter.api.Order"/>
     <fullyQualifiedTypeName name="lombok.Builder"/>
     <fullyQualifiedTypeName name="lombok.extern.slf4j.Slf4j"/>
-    <fullyQualifiedTypeName name="org.springframework.context.annotation.Configuration"/>
     <fullyQualifiedTypeName name="com.mohaji.repository.ProductMapper"/>
     <fullyQualifiedTypeName name="com.mohaji.service.ProductService"/>
     <fullyQualifiedTypeName name="lombok.experimental.StandardException"/>
     <fullyQualifiedTypeName name="lombok.Setter"/>
     <fullyQualifiedTypeName name="com.mohaji.model.Product"/>
-    <fullyQualifiedTypeName name="org.springframework.stereotype.Controller"/>
     <fullyQualifiedTypeName name="com.mohaji.repository.ArtboardMapper"/>
     <fullyQualifiedTypeName name="com.mohaji.model.Artboard"/>
     <fullyQualifiedTypeName name="com.mohaji.service.LoginCheckService"/>
@@ -54,10 +52,12 @@
     <fullyQualifiedTypeName name="java.lang.Integer"/>
     <fullyQualifiedTypeName name="lombok.AllArgsConstructor"/>
     <fullyQualifiedTypeName name="lombok.NoArgsConstructor"/>
-    <fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
     <fullyQualifiedTypeName name="org.apache.ibatis.annotations.Mapper"/>
     <fullyQualifiedTypeName name="com.mohaji.model.Popboard"/>
     <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
     <fullyQualifiedTypeName name="com.mohaji.service.PopboardService"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.GetMapping"/>
+    <fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
+    <fullyQualifiedTypeName name="org.springframework.context.annotation.Configuration"/>
+    <fullyQualifiedTypeName name="org.springframework.stereotype.Controller"/>
 </qualifiedTypeNameHistroy>

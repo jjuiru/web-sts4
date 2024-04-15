@@ -22,7 +22,6 @@
         <li><a  onclick="showUserInfo()">내 정보</a></li>
         <li><a  onclick="showMyPopups()">나의 팝업</a></li>
         <li><a  onclick="showMyBoard()">리뷰관리</a></li>
-         <li><a  href="date">스케줄</a></li>
     </ul>
 
     <!-- 내 정보 -->

@@ -22,6 +22,17 @@ public interface ArtboardMapper {
 	@Select("select * from artboard where POP_CODE =#{popCode}")
 	Artboard selectOneArtboard(String popCode);
 	
+	@Select("SELECT * "
+			+ "FROM artboard "
+			+ "WHERE #{date} BETWEEN start_day AND end_day;")
+	List<Artboard> selDateArtboard(String date);
+	
+	@Select("SELECT * "
+	        + "FROM artboard "
+	        + "WHERE pop_name LIKE CONCAT('%', #{keyword}, '%') "
+	        + "OR content LIKE CONCAT('%', #{keyword}, '%');")
+	List<Artboard> selKeyArtboardList(String keyword);
+	
 	@Insert("INSERT INTO artboard (POP_CODE, POP_NAME, START_DAY, END_DAY, content, weblink, rink, place)"
 			+ "VALUES (#{popCode}, #{popName}, #{startDay} , #{endDay}, #{content}, #{weblink}, #{rink}, #{place} )")       
 	void insertArtboard(Artboard artboard);

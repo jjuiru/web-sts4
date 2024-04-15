@@ -24,5 +24,10 @@ public class ArtboardService {
     
     public Artboard artboardSelectCode(String popCode) {
         return artboardMapper.selectOneArtboard(popCode); }
-
+    
+    public List<Artboard> selDateArtboardList(String date) {
+        return artboardMapper.selDateArtboard(date); }
+    
+    public List<Artboard> selKeyArtboardList(String keyword) {
+        return artboardMapper.selKeyArtboardList(keyword); }
 }
