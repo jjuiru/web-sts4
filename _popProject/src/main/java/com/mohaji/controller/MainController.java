@@ -22,7 +22,6 @@ import com.mohaji.model.Artboard;
 import com.mohaji.model.Member;
 import com.mohaji.model.Popboard;
 import com.mohaji.service.ArtboardService;
-import com.mohaji.service.CommentService;
 import com.mohaji.service.LikelistService;
 import com.mohaji.service.LoginCheckService;
 import com.mohaji.service.MemberService;
@@ -49,6 +48,7 @@ public class MainController {
 	
 	@Autowired
 	PopboardService popboardService;
+	
 	
 	//----------세션을 사용해 로그인 여부와 userId 값을 리턴(모든 로그인 체크에 사용가능) -------------
 	HttpSession session;
@@ -80,27 +80,44 @@ public class MainController {
 	
 	//----------행사 클릭시 뜨는 뷰 페이지 행사정보--------------
 	@GetMapping("/view")
-	public String view(Model model, String popCode, HttpServletRequest request) {
-		setLoginCAttribute(model, request);//loginC,userId 반환
-		model.addAttribute("popCode",popCode);
-		model.addAttribute("pop",artboardService.artboardSelectCode(popCode));
-		model.addAttribute("count", likelistService.countPopCode(popCode));
-		model.addAttribute("popBoard",popboardService.selectPopboard(popCode));
-		model.addAttribute("val", String.valueOf(popboardService.starsValue(popCode)));
-		String userId=(String) session.getAttribute("userId");
-		if(userId==null) {
-			model.addAttribute("onOff", "off");
-			model.addAttribute("count", likelistService.countPopCode(popCode));
-			return "artboard/view";
-		}
-		model.addAttribute("onOff", likelistService.checkLike(userId, popCode));
-		model.addAttribute("count", likelistService.countPopCode(popCode));
-		return "artboard/view";
+	public String view(Model model, String popCode, HttpServletRequest request, @RequestParam(defaultValue = "0") int page) {
+		 HttpSession session1 = request.getSession();
+		    
+		    // popCode가 null이 아닌 경우에만 세션에 저장
+		    if (popCode != null && !popCode.isEmpty()) {
+		        // 세션에 popCode 저장
+		    	System.out.println(popCode);
+		        session1.setAttribute("popCodeStatus", popCode);
+		    }    
+		    
+		    // 세션에서 데이터 가져오기
+		    String popCodeStatus = (String) session1.getAttribute("popCodeStatus");
+		setLoginCAttribute(model, request);
+	    model.addAttribute("popCode", popCodeStatus);
+	    model.addAttribute("pop", artboardService.artboardSelectCode(popCodeStatus));
+	    model.addAttribute("count", likelistService.countPopCode(popCodeStatus));
+	    model.addAttribute("popBoard", popboardService.selectPopboard(popCodeStatus, page)); // 페이지 번호 추가
+	    model.addAttribute("val", String.valueOf(popboardService.starsValue(popCodeStatus)));
+	    model.addAttribute("currentPage", page); // 현재 페이지 번호 추가
+
+	    // 전체 페이지 수 계산하여 뷰로 전달
+	    int totalPages = popboardService.calculateTotalPages(popCodeStatus, 10); // 페이지당 아이템 수는 10으로 가정
+	    model.addAttribute("totalPages", totalPages);
+
+	    String userId=(String) session.getAttribute("userId");
+	    if(userId==null) {
+	        model.addAttribute("onOff", "off");
+	        model.addAttribute("count", likelistService.countPopCode(popCodeStatus));
+	        return "artboard/view";
+	    }
+	    model.addAttribute("onOff", likelistService.checkLike(userId, popCodeStatus));
+	    model.addAttribute("count", likelistService.countPopCode(popCodeStatus));
+	    return "artboard/view";
 	}
 	
 	// ---------뷰 페이지에서 하트(좋아요)를 눌렀을 경우 추가 코드------------
 	@GetMapping("/like")
-	public String like(Model model, String status, String popCode, HttpServletRequest request) {
+	public String like(Model model, String status, String popCode, HttpServletRequest request, int page) {
 		setLoginCAttribute(model, request); //loginC,userId 반환
 		model.addAttribute("pop",artboardService.artboardSelectCode(popCode)); //선택한 팝업 띄우기
 		model.addAttribute("popBoard",popboardService.selectPopboard(popCode));
@@ -277,7 +294,6 @@ public class MainController {
 		List<Artboard> val = artboardService.selDateArtboardList(date);
 		System.out.println(val);
 		if (val.isEmpty()) {
-
 		model.addAttribute("text" , "검색 결과가 없습니다."  );	
 		}else
 		model.addAttribute("list" , val );		
@@ -289,7 +305,6 @@ public class MainController {
 		List<Artboard> val = artboardService.selKeyArtboardList(keyword);
 		System.out.println(val);
 		if (val.isEmpty()) {
-
 			model.addAttribute("text" , "검색 결과가 없습니다."  );	
 			}else
 			model.addAttribute("list" , val );		

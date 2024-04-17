@@ -18,6 +18,17 @@ public class PopboardService {
 		return popboardMapper.selectAllPopboard();
 	}
 	
+	   public List<Popboard> selectPopboard(String popCode, int page) {
+	        int pageSize = 5; // 페이지당 아이템 수
+	        int offset = page * pageSize; // 시작 오프셋 계산
+	        return popboardMapper.selectPopboardWithPagination(popCode, offset, pageSize);
+	    }
+	   
+		public int calculateTotalPages(String popCode, int pageSize) {
+	        int totalItems = popboardMapper.countByPopCode(popCode); // 해당 팝코드의 총 데이터 수 조회
+	        return (int) Math.ceil((double) totalItems / pageSize); // 전체 페이지 수 계산하여 반환
+	    }
+	
 	public void insertPopboard(Popboard popboard) {
 		System.out.println(popboard);
 		popboardMapper.insertPopboard(popboard);
@@ -26,7 +37,6 @@ public class PopboardService {
 	public List<Popboard> selectIdPopboard(String userId){	
 		return popboardMapper.selectIdPopboard(userId);
 	}
-	
 	
 	public void deletePopboard(Long num) {
 		popboardMapper.deletePopboard(num);
@@ -52,4 +62,5 @@ public class PopboardService {
 		System.out.println(val);
 		return val;
 	}		
+
 }

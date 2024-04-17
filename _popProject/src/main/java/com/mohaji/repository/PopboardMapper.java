@@ -7,14 +7,18 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.springframework.data.repository.query.Param;
+
 import com.mohaji.model.Popboard;
 
 
 @Mapper
 public interface PopboardMapper {
 
+	@Select("SELECT COUNT(*) FROM popboard")
+	int countPopboard();
 		
-		@Select("SELECT COUNT(*) FROM likelist WHERE pop_code = #{popCode}")
+		@Select("SELECT COUNT(*) FROM popboard WHERE pop_code = #{popCode}")
 		int countByPopCode(String popCode);
 		
 		@Select("select * from popboard")
@@ -39,5 +43,8 @@ public interface PopboardMapper {
 		        + "regtime = NOW() "
 		        + "WHERE num = #{num}")
 		void updatePopboard(Popboard popboard);
+		
+		@Select("SELECT * FROM popboard WHERE POP_CODE = #{popCode} LIMIT #{offset}, #{limit}")
+		List<Popboard> selectPopboardWithPagination(@Param("popCode") String popCode, @Param("offset") int offset, @Param("limit") int limit);
 		
 }

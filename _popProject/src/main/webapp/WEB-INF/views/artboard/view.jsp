@@ -70,36 +70,24 @@
     <td><button >수정</button></td>
 </c:if>
             </tr>
-        </c:forEach>
-    </table>
-    
-        <!-- 페이징하는 코드 시작 -->
-    <c:forEach var="comment" items="${comments}">
-    <!-- 각각의 댓글 출력 -->
 </c:forEach>
+</table>    
 
-<c:set var="currentPage" value="${page}" />
-<c:set var="totalPages" value="10" /> <!-- 예시로 총 페이지 수를 설정 -->
+<c:set var="currentPage" value="${currentPage}" /> <!-- 현재 페이지 번호를 가져와 변수에 저장합니다. -->
 
-<c:if test="${currentPage gt 0}">
-    <a href="?page=${currentPage - 1}">이전</a>
+<c:if test="${totalPages > 0}">
+    <c:if test="${currentPage > 0}">
+        <a href="view" onclick="getPage(${currentPage - 1})">이전</a>
+    </c:if>
+
+    <c:forEach var="i" begin="0" end="${totalPages - 1}">
+        <a href="/view?page=${i+1}&popCode=${popCode}">${i + 1}</a>
+    </c:forEach>
+
+    <c:if test="${currentPage < totalPages - 1}">
+        <a href="view" onclick="getPage(${currentPage + 1})">다음</a>
+    </c:if>
 </c:if>
-
-<c:forEach var="i" begin="0" end="${totalPages - 1}">
-    <c:choose>
-        <c:when test="${currentPage eq i}">
-            <span>${i + 1}</span>
-        </c:when>
-        <c:otherwise>
-            <a href="?page=${i}">${i + 1}</a>
-        </c:otherwise>
-    </c:choose>
-</c:forEach>
-
-<c:if test="${currentPage lt totalPages - 1}">
-    <a href="?page=${currentPage + 1}">다음</a>
-</c:if>
-    <!-- 페이징하는 코드 끝 -->
         
 <form id="boardForm" action="insertPopboard" method="post" onsubmit="return checkUserId()">
     <input hidden type="text" id="num" name="num" >
@@ -200,8 +188,7 @@ window.onload = function() {
             showboardElement.style.display = "block";
         } else {
             showboardElement.style.display = "none";
-        }
-        
+        }      
     }
 </script>
 </body>
