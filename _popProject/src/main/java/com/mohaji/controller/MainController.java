@@ -81,14 +81,16 @@ public class MainController {
 	//----------행사 클릭시 뜨는 뷰 페이지 행사정보--------------
 	@GetMapping("/view")
 	public String view(Model model, String popCode, HttpServletRequest request, @RequestParam(defaultValue = "0") int page) {
-		 HttpSession session1 = request.getSession();
-		    
+		 HttpSession session1 = request.getSession();		    
 		    // popCode가 null이 아닌 경우에만 세션에 저장
 		    if (popCode != null && !popCode.isEmpty()) {
 		        // 세션에 popCode 저장
-		    	System.out.println(popCode);
 		        session1.setAttribute("popCodeStatus", popCode);
-		    }    
+		    }
+		    if (page!=0) {
+		    	System.out.println(page);
+		    	 model.addAttribute("save", "on");
+		    }
 		    
 		    // 세션에서 데이터 가져오기
 		    String popCodeStatus = (String) session1.getAttribute("popCodeStatus");
@@ -101,7 +103,7 @@ public class MainController {
 	    model.addAttribute("currentPage", page); // 현재 페이지 번호 추가
 
 	    // 전체 페이지 수 계산하여 뷰로 전달
-	    int totalPages = popboardService.calculateTotalPages(popCodeStatus, 10); // 페이지당 아이템 수는 10으로 가정
+	    int totalPages = popboardService.calculateTotalPages(popCodeStatus, 5); // 페이지당 아이템 수는 10으로 가정
 	    model.addAttribute("totalPages", totalPages);
 
 	    String userId=(String) session.getAttribute("userId");
@@ -115,13 +117,44 @@ public class MainController {
 	    return "artboard/view";
 	}
 	
+	//----------나의 댓글 관리----------------------------
+	@GetMapping("/delMyPopboard")
+	public String delMyPopboard(HttpServletRequest request,RedirectAttributes redirectAttributes, Model model,String num, String popCode) {
+		popboardService.deletePopboard(Long.parseLong(num));
+		model.addAttribute("popDel", "off");
+		redirectAttributes.addFlashAttribute("popDel", "off");
+		return "redirect:/myPage" ;	
+	}
+	
+	//-------------댓글 기능-----------------------------	
+	@PostMapping("/insertPopboard")
+	public String insertPopboard(HttpServletRequest request, Model model,Popboard popboard , @RequestParam(defaultValue = "0") int page) {
+		popboardService.insertPopboard(popboard);
+		return "redirect:/view?popCode=" + popboard.getPopCode()+"&page="+ page;	
+	}
+	
+	@GetMapping("/deletePopboard")
+	public String deletePopboard(HttpServletRequest request, Model model,String num, String popCode, @RequestParam(defaultValue = "0") int page) {
+		popboardService.deletePopboard(Long.parseLong(num));
+		return "redirect:/view?popCode=" + popCode+"&page="+ page;
+	}
+	
 	// ---------뷰 페이지에서 하트(좋아요)를 눌렀을 경우 추가 코드------------
 	@GetMapping("/like")
-	public String like(Model model, String status, String popCode, HttpServletRequest request, int page) {
+	public String like(Model model, String status, String popCode, HttpServletRequest request, @RequestParam(defaultValue = "0") int page) {
 		setLoginCAttribute(model, request); //loginC,userId 반환
 		model.addAttribute("pop",artboardService.artboardSelectCode(popCode)); //선택한 팝업 띄우기
-		model.addAttribute("popBoard",popboardService.selectPopboard(popCode));
+	    model.addAttribute("count", likelistService.countPopCode(popCode));
+	    model.addAttribute("popBoard", popboardService.selectPopboard(popCode, page)); // 페이지 번호 추가
+	    model.addAttribute("val", String.valueOf(popboardService.starsValue(popCode)));
+	    model.addAttribute("currentPage", page); // 현재 페이지 번호 추가
+
+	    // 전체 페이지 수 계산하여 뷰로 전달
+	    int totalPages = popboardService.calculateTotalPages(popCode, 5); // 페이지당 아이템 수는 10으로 가정
+	    model.addAttribute("totalPages", totalPages);
 		String userId=(String) session.getAttribute("userId"); //세션에서 유저 아이디 반환
+		
+		
 		if(userId==null) { //아이디가 없을 경우(로그인이 아닐 경우
 		model.addAttribute("text", "on");	
 		model.addAttribute("count", likelistService.countPopCode(popCode));
@@ -264,27 +297,6 @@ public class MainController {
 	public String date(HttpServletRequest request,Model model, Member member) {
 		setLoginCAttribute(model, request); //loginC,userId 반환
 		return "login/date";
-	}
-	//----------나의 댓글 관리----------------------------
-	@GetMapping("/delMyPopboard")
-	public String delMyPopboard(HttpServletRequest request,RedirectAttributes redirectAttributes, Model model,String num, String popCode) {
-		popboardService.deletePopboard(Long.parseLong(num));
-		model.addAttribute("popDel", "off");
-		redirectAttributes.addFlashAttribute("popDel", "off");
-		return "redirect:/myPage" ;	
-	}
-	
-	//-------------댓글 기능-----------------------------	
-	@PostMapping("/insertPopboard")
-	public String insertPopboard(HttpServletRequest request, Model model,Popboard popboard) {
-		popboardService.insertPopboard(popboard);
-		return "redirect:/view?popCode=" + popboard.getPopCode();	
-	}
-	
-	@GetMapping("/deletePopboard")
-	public String deletePopboard(HttpServletRequest request, Model model,String num, String popCode) {
-		popboardService.deletePopboard(Long.parseLong(num));
-		return "redirect:/view?popCode=" + popCode;	
 	}
 	
 	//------------- 팝업  검색기능 추가-----------------------------

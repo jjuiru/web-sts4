@@ -51,16 +51,19 @@ public class PopboardService {
 	}
 	
 	public Double starsValue(String popCode) {
-		Double star = 0.0;
-		int count = 0;
-		List<Popboard> list = popboardMapper.selectPopboard(popCode);
-		for (Popboard board : list) {
-		    star += (double) board.getStar(); // 누적 합산을 위해 +=
-		    count++; // count를 증가시킴
-		}
-		double val = (count != 0) ? star / (double) count : 0.0; // count가 0이 아닐 때만 계산하여 val에 할당
-		System.out.println(val);
-		return val;
+	    Double star = 0.0;
+	    int count = 0;
+	    List<Popboard> list = popboardMapper.selectPopboard(popCode);
+	    for (Popboard board : list) {
+	        star += (double) board.getStar(); // 누적 합산을 위해 +=
+	        count++; // count를 증가시킴
+	    }
+	    double val = (count != 0) ? star / (double) count : 0.0; // count가 0이 아닐 때만 계산하여 val에 할당
+	    
+	    // 소수점 첫째 자리까지 반올림
+	    val = Math.round(val * 10.0) / 10.0;
+	    System.out.println(val);
+	    return val;
 	}		
 
 }

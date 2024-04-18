@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<haeder>
 	<article>
 		<div>
 			<h1>
@@ -16,6 +17,22 @@
 			<h3>서울 팝업 전시 모두 모여라</h3>
 		</div>
 	</article>
+	<div>
+	<c:choose>
+	<c:when test="${loginC}">
+		<a>${userId}님.로그인</a> 
+		 <a href="myPage">마이페이지.(login)</a> 
+		 <a href="logout">로그아웃.(login)</a>
+		<h6>=(메뉴)</h6>
+		</c:when>
+		 <c:otherwise>
+        <a href="loginPage">로그인</a>
+        <a href="signUpPage">회원가입</a>        
+        <h6>=(메뉴)</h6>
+    </c:otherwise>
+</c:choose>
+	</div>
+	</haeder>
 			<article> 
 		<!-- 여기가 달력이랑 검색 있는 사이드 영역 -->
 		<!-- 달력부분은 부트스트랩이나 여러가지 형태로 바꾸기 가능 -->

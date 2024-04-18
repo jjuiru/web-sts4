@@ -18,6 +18,7 @@
     </style>
 </head>
 <body>
+	<haeder>
 	<article>
 		<div>
 			<h1>
@@ -26,6 +27,22 @@
 			<h3>서울 팝업 전시 모두 모여라</h3>
 		</div>
 	</article>
+	<div>
+	<c:choose>
+	<c:when test="${loginC}">
+		<a>${userId}님.로그인</a> 
+		 <a href="myPage">마이페이지.(login)</a> 
+		 <a href="logout">로그아웃.(login)</a>
+		<h6>=(메뉴)</h6>
+		</c:when>
+		 <c:otherwise>
+        <a href="loginPage">로그인</a>
+        <a href="signUpPage">회원가입</a>        
+        <h6>=(메뉴)</h6>
+    </c:otherwise>
+</c:choose>
+	</div>
+	</haeder>
 <figure>
     <img src="<c:url value='${pop.rink}' />" alt="콘텐츠 이미지">
     <!-- 제목 -->
@@ -34,7 +51,7 @@
     <button class="heart-btn ${onOff == 'on' ? 'active' : ''}" onclick="toggleHeart(this, '${pop.popCode}')">
         <i class="far fa-heart"></i> <!-- 빈 하트 아이콘 -->
     </button> 
-    <a onclick="showboard(); scrollToBoardForm();" style="cursor: pointer;">review</a>
+    <a onclick="scrollToBoardForm();" style="cursor: pointer;">review</a>
     <p>장소: ${pop.place}</p>
     <p>기간: ${pop.startDay} - ${pop.endDay}</p>
     <p>${pop.content}</p>
@@ -42,7 +59,7 @@
     <a href="${pop.weblink}">${pop.weblink}</a><br>
     
 
-    <div style="display: none;" id="showboard">
+    <div id="showboard">
   <table>
                  <lable>평균 ${val} 점</lable>
         <c:forEach var="board" items="${popBoard}" >
@@ -66,7 +83,7 @@
                 <td hidden>${board.num}</td>
                 <td hidden>${board.popCode}</td>
                 <c:if test="${sessionScope.userId eq board.userId}">
-    <td><button onclick="window.location.href='/deletePopboard?num=${board.num}&popCode=${popCode}'">삭제</button></td>
+    <td><button onclick="window.location.href='/deletePopboard?num=${board.num}&popCode=${popCode}&page=${currentPage}'">삭제</button></td>
     <td><button >수정</button></td>
 </c:if>
             </tr>
@@ -89,7 +106,7 @@
     </c:if>
 </c:if>
         
-<form id="boardForm" action="insertPopboard" method="post" onsubmit="return checkUserId()">
+<form id="boardForm" action="insertPopboard?page=${currentPage}" method="post" onsubmit="return checkUserId()">
     <input hidden type="text" id="num" name="num" >
     <input hidden type="text" id="userId" name="userId" value="${userId}">
     <input hidden type="text" id="popCode" name="popCode" value="${popCode}">
@@ -152,44 +169,43 @@ function fillForm(row) {
     document.getElementById("num").value = num;
     document.getElementById("popCode").value = popCode;
 }
-//댓글 클릭시 스크롤이 자동으로 내려가게 하는 함수
-function scrollToBoardForm() {
-    var showboardElement = document.getElementById("showboard");
-    if (showboardElement && showboardElement.style.display === "block") {
-        var boardFormElement = document.getElementById("boardForm");
-        if (boardFormElement) {
-            boardFormElement.scrollIntoView({ behavior: 'smooth' });
-        }
-    }
-}
+
 window.onload = function() {
     var textValue = "${text}";
-
+    var showboard = "${save}"
+    var showboardElement = document.getElementById("showboard");
     if (textValue === 'on') {
         alert('로그인 후 이용해 주세요.');
         window.location.href = '/loginPage';
     }
+    
+    if (showboard === 'on') {
+        showboardElement.style.display = "block"; // showboard 요소를 화면에 표시합니다.
+        showboardElement.scrollIntoView(); // showboard 요소로 스크롤 이동
+    }
 };
+
+function scrollToBoardForm() {
+    var showboardElement = document.getElementById("showboard");
+    if (showboardElement) {
+        showboardElement.style.display = "block"; // showboard 요소를 화면에 표시합니다.
+        showboardElement.scrollIntoView({ behavior: 'smooth' }); // showboard 요소로 스크롤 이동
+    }
+}
     function toggleHeart(button, popCode) {
+    	var page ="${currentPage}";
         button.classList.toggle("active"); // 버튼에 active 클래스를 toggle하여 버튼의 색상을 변경합니다.
         
         // 버튼의 상태에 따라 리다이렉트
         if (button.classList.contains("active")) {
             // 버튼이 활성화된 상태일 때 (하트가 클릭된 상태)
-           window.location.href = "like?status=on&popCode=" + popCode; // popCode 값을 파라미터로 추가합니다.
+           window.location.href = "like?status=on&popCode=" + popCode +"&page=" + page; // popCode 값을 파라미터로 추가합니다.
         } else {
             // 버튼이 비활성화된 상태일 때 (하트가 클릭되지 않은 상태)
-             window.location.href = "like?status=off&popCode=" + popCode; // popCode 값을 파라미터로 추가합니다.           
+             window.location.href = "like?status=off&popCode="  + popCode +"&page=" + page; // popCode 값을 파라미터로 추가합니다.           
         }
     }
-    function showboard() {
-        var showboardElement = document.getElementById("showboard");
-        if (showboardElement.style.display === "none") {
-            showboardElement.style.display = "block";
-        } else {
-            showboardElement.style.display = "none";
-        }      
-    }
+
 </script>
 </body>
 </html>

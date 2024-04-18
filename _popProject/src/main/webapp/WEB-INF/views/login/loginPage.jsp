@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<haeder>
 	<article>
 		<div>
 			<h1>
@@ -16,6 +17,22 @@
 			<h3>서울 팝업 전시 모두 모여라</h3>
 		</div>
 	</article>
+	<div>
+	<c:choose>
+	<c:when test="${loginC}">
+		<a>${userId}님.로그인</a> 
+		 <a href="myPage">마이페이지.(login)</a> 
+		 <a href="logout">로그아웃.(login)</a>
+		<h6>=(메뉴)</h6>
+		</c:when>
+		 <c:otherwise>
+        <a href="loginPage">로그인</a>
+        <a href="signUpPage">회원가입</a>        
+        <h6>=(메뉴)</h6>
+    </c:otherwise>
+</c:choose>
+	</div>
+	</haeder>
 	<form action="login" method="post" onsubmit="return validateForm()">
 		<h1 class="h3 mb-3 fw-normal">로그인</h1>
 		<div class="form-floating">
