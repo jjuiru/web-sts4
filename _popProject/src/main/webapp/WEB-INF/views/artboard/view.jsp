@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=2ko63nwjlc&submodules=geocoder"></script>
 <style>
     .heart-btn {
         cursor: pointer;
@@ -18,7 +19,9 @@
     </style>
 </head>
 <body>
+
 	<haeder>
+	
 	<article>
 		<div>
 			<h1>
@@ -43,7 +46,10 @@
 </c:choose>
 	</div>
 	</haeder>
+	
+
 <figure>
+
     <img src="<c:url value='${pop.rink}' />" alt="콘텐츠 이미지">
     <!-- 제목 -->
     <h1>${pop.popName}</h1>
@@ -55,9 +61,12 @@
     <p>장소: ${pop.place}</p>
     <p>기간: ${pop.startDay} - ${pop.endDay}</p>
     <p>${pop.content}</p>
-    <div id="map"></div>
     <a href="${pop.weblink}">${pop.weblink}</a><br>
     
+
+        <!-- 지도api -->
+<div id="map" style="width:40%;height:400px;"></div>
+
 
     <div id="showboard">
   <table>
@@ -135,6 +144,31 @@
 <!-- Font Awesome 스크립트 CDN 링크 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
 <script>
+        var address = "${pop.place}";
+        
+        // 입력받은 주소로 좌표 변환 요청
+        naver.maps.Service.geocode({ address: address }, function(status, response) {
+            if (status === naver.maps.Service.Status.OK) {
+                var coords = response.result.items[0].point;
+                var mapOptions = {
+                    center: new naver.maps.LatLng(coords.y, coords.x),
+                    zoom: 17
+                };
+
+                // 지도를 생성하고 표시합니다.
+                var map = new naver.maps.Map('map', mapOptions);
+                
+                // 지도에 마커를 추가합니다.
+                var marker = new naver.maps.Marker({
+                    position: new naver.maps.LatLng(coords.y, coords.x),
+                    map: map
+                });
+            } else {
+                alert('주소를 찾을 수 없습니다.');
+            }
+        });
+    </script>
+<script>
     const stars = document.querySelectorAll('input[name="star"]');
 
     stars.forEach((star) => {
@@ -205,7 +239,6 @@ function scrollToBoardForm() {
              window.location.href = "like?status=off&popCode="  + popCode +"&page=" + page; // popCode 값을 파라미터로 추가합니다.           
         }
     }
-
 </script>
 </body>
 </html>
