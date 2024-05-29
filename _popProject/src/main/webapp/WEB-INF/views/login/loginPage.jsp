@@ -38,8 +38,8 @@
 		<div class="form-floating">
 			<input style="margin-bottom: 10px; border-radius: 10px;" type="text"
 				class="form-control" id="userId" name="userId" placeholder="id">
-			<label for="userId">아이디</label> <label id="userIdError"
-				style="color: red; display: none;">아이디를 입력해주세요.</label>
+			<label for="userId">아이디</label>
+			<label id="userIdError" style="color: red; display: none;">아이디를 입력해주세요.</label>
 		</div>
 		<div class="form-floating">
 			<input style="border-radius: 10px;" type="text" class="form-control"
