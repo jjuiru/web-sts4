@@ -35,7 +35,7 @@
 		</div>
 		<nav>
 			<ul>
-				<li><a href="root/sub_popup.html">POPUP</a></li>
+				<li><a href="selectAllList">POPUP</a></li>
 				<li><a href="#">MAP</a></li>
 				<li><a href="#">EVENT</a></li>
 			</ul>
@@ -191,9 +191,9 @@
 					</div>
 					<div class="search">
 						<h3 class="blind">search section</h3>
-						<form action="/action_page.php" method="get">
+						<form action="keyword" method="get">
 							<div class="search_input_box">
-								<input type="search" name="insearch" id="insearch" maxlength="255" autocomplete="off" class="search_input" data-atcmp-element><!-- 
+								<input type="search" name="keyword" id="insearch" maxlength="255" autocomplete="off" class="search_input" data-atcmp-element><!--
 						--><button type="submit" class="btn_search">
 									<span class="ico_btn_search">
 										<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none"><path fill="#0447CC" fill-rule="evenodd" d="M8.26 4.63a3.63 3.63 0 1 1-7.26 0 3.63 3.63 0 0 1 7.26 0Zm-.73 3.608a4.63 4.63 0 1 1 .707-.707l3.03 3.028-.708.707-3.028-3.028Z" clip-rule="evenodd"/></svg>
@@ -205,8 +205,8 @@
 						<div class="recent clearfix">
 							<h4>최근검색어</h4>
 							<ul class="clearfix">
-								<li><a href="#"><span>투어스</span></a></li>
-								<li><a href="#"><span>플레이브</span></a></li>
+								<li><a href="keyword?keyword=tws"><span>투어스</span></a></li>
+								<li><a href="keyword?keyword=plave"><span>플레이브</span></a></li>
 							</ul>
 						</div>
 					</div>

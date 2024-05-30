@@ -102,6 +102,8 @@ public class MainController {
 	    model.addAttribute("val", String.valueOf(popboardService.starsValue(popCodeStatus)));
 	    model.addAttribute("currentPage", page); // 현재 페이지 번호 추가
 
+		System.out.println(popboardService.selectPopboard(popCodeStatus, page));
+
 	    // 전체 페이지 수 계산하여 뷰로 전달
 	    int totalPages = popboardService.calculateTotalPages(popCodeStatus, 5); // 페이지당 아이템 수는 10으로 가정
 	    model.addAttribute("totalPages", totalPages);
@@ -303,6 +305,7 @@ public class MainController {
 	
 	@GetMapping("/selectDate")
 	public String selectDate(HttpServletRequest request, Model model, String date) {
+		setLoginCAttribute(model, request); //loginC,userId 반환
 		List<Artboard> val = artboardService.selDateArtboardList(date);
 		System.out.println(val);
 		if (val.isEmpty()) {
@@ -314,6 +317,7 @@ public class MainController {
 	
 	@GetMapping("/keyword")
 	public String keyword(HttpServletRequest request, Model model, String keyword) {
+		setLoginCAttribute(model, request); //loginC,userId 반환
 		List<Artboard> val = artboardService.selKeyArtboardList(keyword);
 		System.out.println(val);
 		if (val.isEmpty()) {
@@ -325,7 +329,9 @@ public class MainController {
 	
 	@GetMapping("/selectAllList")
 	public String selectAllList(HttpServletRequest request, Model model, String keyword) {
-		model.addAttribute("list" , artboardService.artboardList());	
+		setLoginCAttribute(model, request); //loginC,userId 반환
+		model.addAttribute("list" , artboardService.artboardList());
+
 			return "artboard/list";	
 	}
 	

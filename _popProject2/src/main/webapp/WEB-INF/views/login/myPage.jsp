@@ -1,142 +1,198 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>마이페이지</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>MOHAJIPOP!</title>
+	<link rel="stylesheet" type="text/css" href="root/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="root/css/common.css">
+	<link rel="stylesheet" type="text/css" href="root/css/sub_mypage.css">
+	<link rel="stylesheet" type="text/css" href="root/css/sub_mypage_mypopup.css">
+	<link rel="stylesheet" type="text/css" href="root/css/sub_mypage_myreview.css">
+	<script src="root/js/common.js"></script>
 </head>
 <body>
-	<haeder>
-	<article>
-		<div>
-			<h1>
-				<a href="main">MOHAJIPOP!</a>
-			</h1>
-			<h3>서울 팝업 전시 모두 모여라</h3>
+<header>
+	<div class="inner_wrap">
+		<h1><a href="main">MOHAJIPOP!</a></h1>
+		<button id="btn_menu"><span class="blind">menu button</span></button>
+		<div class="utility">
+			<c:choose>
+				<c:when test="${loginC}">
+					<span>${userId}님.로그인</span>
+					<a href="myPage"><span>마이페이지</span></a>
+					<a href="logout"><span>로그아웃</span></a>
+				</c:when>
+				<c:otherwise>
+					<script type="text/javascript">
+						window.location.href = 'main';
+					</script>
+				</c:otherwise>
+			</c:choose>
 		</div>
-	</article>
-	<div>
-	<c:choose>
-	<c:when test="${loginC}">
-		<a>${userId}님.로그인</a> 
-		 <a href="myPage">마이페이지.(login)</a> 
-		 <a href="logout">로그아웃.(login)</a>
-		<h6>=(메뉴)</h6>
-		</c:when>
-		 <c:otherwise>
-        <a href="loginPage">로그인</a>
-        <a href="signUpPage">회원가입</a>        
-        <h6>=(메뉴)</h6>
-    </c:otherwise>
-</c:choose>
 	</div>
-	</haeder>
-    <h1>마이페이지</h1>
-    <ul>
-        <li><a  onclick="showUserInfo()">내 정보</a></li>
-        <li><a  onclick="showMyPopups()">나의 팝업</a></li>
-        <li><a  onclick="showMyBoard()">리뷰관리</a></li>
-    </ul>
+	<nav>
+		<ul>
+			<li><a href="selectAllList">POPUP</a></li>
+			<li><a href="#">MAP</a></li>
+			<li><a href="#">EVENT</a></li>
+		</ul>
+	</nav>
+</header>
 
-    <!-- 내 정보 -->
-    <div id="userInfo">
-        <h2>내 정보</h2>
-	<div>
-		<form id="registerForm" action="userUpdate" method="post">
-			<label for="userid">아이디</label><input type="text" id="userId" name="userId" readonly><br>
-			<label for="password">비밀번호</label> 
-			<input type="password"id="pass" name="pass" placeholder="비밀번호 입력"><br> 
-			<label for="confirm-password">비밀번호 확인</label> 
-			<input type="password" id="confirm-pass" placeholder="비밀번호 확인"><br> 
-			<label id="passNotEquals" style="color: red; display: none;">비밀번호가 일치하지 않습니다.</label> 
-			
-			<label for="uname">이름</label> <input type="text" id="uname" name="uname" placeholder="이름입력"><br> 
-			
-			<label for="email">이메일</label> <input type="email" id="email" name="email" placeholder="이메일 입력"><br> 
-			
-			<label for="phoneNum">핸드폰번호</label> <input type="tel" id="phoneNum" name="phoneNum" placeholder="핸드폰번호 입력"><br> 
-			
-			<label for="birthdate">생년월일</label>
-			<input type="text" id="birth" name="birth"><br> 
-			
-			<input type="checkbox" id="uevent" name="uevent"> 
-			<label for="uevent">이벤트 수신 동의</label><br> 
-			
-			<label id="idNotCheck" style="color: red; display: none;">아이디 중복확인을 해주세요</label>
-			<button type="button" onclick="register()">수정</button>
-		</form>
+<section class="visual">
+	<h2>MY PAGE</h2>
+</section>
+<div class="content">
+	<div class="conts_wrap">
+		<div class="inner_wrap">
+			<!--사이드바-->
+			<aside>
+				<div class="side_wrap">
+					<h2 class="blind">side navigation</h2>
+					<h3>MY PAGE</h3>
+					<nav>
+						<ul>
+							<li class="active"><a onclick="showUserInfo()"><span>내 정보</span></a></li>
+							<li><a onclick="showMyPopups()"><span>나의 팝업</span></a></li>
+							<li><a onclick="showMyBoard()"><span>리뷰 관리</span></a></li>
+							<li><a href="#"><span>스케줄</span></a></li>
+						</ul>
+					</nav>
+				</div>
+			</aside>
+			<!--사이드바-->
+			<div class="conts_wrap">
+				<div id="userInfo">
+				<section class="info_edit">
+
+						<h2 class="blind">my information section</h2>
+						<div class="form_wrap">
+							<form id="registerForm" action="userUpdate" method="post">
+								<fieldset>
+									<legend class="blind">account</legend>
+									<div class="account">
+										<input type="text" name="userId" id="user_id" placeholder="아이디" required>
+										<input type="password" name="pass" id="user_pw" placeholder="비밀번호" required>
+										<input type="password" name="user_pw_confirm" id="user_pw_confirm" placeholder="비밀번호 확인" required>
+										<label id="passNotEquals" style="color: red; display: none;">비밀번호가 일치하지 않습니다.</label>
+									</div>
+								</fieldset>
+								<fieldset>
+									<legend class="blind">user information</legend>
+									<div class="user_info">
+										<input type="text" name="uname" id="user_name" placeholder="이름" required>
+										<input type="email" name="email" id="user_mail" placeholder="이메일" required>
+										<input type="tel" name="phoneNum" id="user_phone" placeholder="핸드폰번호" required>
+										<input type="date" name="birth" id="user_birth" data-placeholder="생년월일" required>
+									</div>
+									<div class="checkbox">
+										<label for="agree_event"><input type="checkbox" name="uevent" id="agree_event">이벤트 수신 동의</label>
+									</div>
+									<label id="idNotCheck" style="color: red; display: none;">아이디 중복확인을 해주세요</label>
+								</fieldset>
+								<input type="button" onclick="register()" value="수정" class="btn_more _color_01 _bg_01 _L">
+							</form>
+						</div>
+
+				</section>
+				</div>
+
+				<div id="myPopups" style="display: none;">
+				<section class="mypopup">
+
+						<h2>나의 팝업</h2>
+						<div class="form_wrap">
+							<fieldset>
+								<legend class="blind">my popup</legend>
+								<ul>
+									<c:forEach var="myList" items="${myList}">
+										<li>
+											<a onclick="window.location.href='/view?popCode=${myList.popCode}';">
+												<div class="img_wrap">
+													<img src="<c:url value='${myList.rink}' />" alt="my popup list 01 image">
+													<p>${myList.popName}</p>
+												</div>
+											</a>
+											<form action="likeDelete" method="get">
+												<input type="hidden" name="popCode" value="${myList.popCode}">
+												<input type="hidden" name="userId" value="${userId}">
+												<button type="submit" class="btn_delete"><span class="blind">delete button</span></button>
+											</form>
+										</li>
+									</c:forEach>
+								</ul>
+							</fieldset>
+						</div>
+				</section>
+				</div>
+
+				<div id="myBoard" style="display: none;">
+				<section class="myreview">
+
+						<h2>리뷰 관리</h2>
+						<div class="form_wrap">
+							<fieldset>
+								<legend class="blind">my popup</legend>
+								<ul>
+									<c:forEach var="board" items="${popBoard}">
+										<li>
+											<div class="score">
+												<c:forEach begin="1" end="${board.star}">
+													<i class="active star"><span class="blind">star icon</span></i>
+												</c:forEach>
+											</div>
+											<div class="comment">
+												<p class="user_id">${board.userId} ${board.content}</p>
+											</div>
+											<div class="user_write_date">
+												<p>${board.regtime}</p>
+											</div>
+											<p hidden>${board.num}</p>
+											<p hidden>${board.popCode}</p>
+											<c:if test="${sessionScope.userId eq board.userId}">
+												<button type="button" class="btn_delete" onclick="window.location.href='/delMyPopboard?num=${board.num}&popCode=${popCode}'"><span class="blind">delete button</span></button>
+											</c:if>
+										</li>
+									</c:forEach>
+								</ul>
+							</fieldset>
+						</div>
+				</section>
+				</div>
+			</div>
+		</div>
 	</div>
-    </div>
+</div>
+<footer>
+	<div class="inner_wrap clearfix">
+		<p class="c_name">MOHAJIPOP!</p>
+		<div class="footer_nav">
+			<a href="#"><strong>Pravicy Policy</strong></a><!--
+		 --><a href="#">Terms</a><!--
+		 --><a href="#">Family Site</a><!--
+		 --><a href="#">Site Map</a><!--
+		 --><a href="#" target="_blank">Contact</a>
+		</div>
+		<div class="address">
+			<address>서울 마포구 신촌로 176 중앙빌딩</address>
+			<address>Jungang Building, 176, Sinchon-ro, Mapo-gu, Seoul</address>
+		</div>
+		<p class="copy">ⓒ 2024. MOHAJIPOP. All rights reserved.</p>
+	</div>
 
-    <!-- 나의 팝업 메뉴 클릭시 -->
-    <div id="myPopups">
-        <h2>나의 팝업</h2>
-        <!-- 여기에 좋아요를 눌렀던 팝업 리스트를 출력하는 코드를 작성예정 -->
-        <!-- 예시로 팝업 제목과 내용을 리스트 형태로 출력하는 코드를 작성 -->
-        		<article>
-			<table>
-				<c:forEach var="myList" items="${myList}">
-					<tr onclick="window.location.href='/view?popCode=${myList.popCode}';"
-						style="cursor: pointer;">
-						<th><img src="<c:url value='${myList.rink}' />" alt="콘텐츠 이미지"></th>
-						<td>${myList.popName}</td>
-						<td>${myList.startDay}</td>
-						<td>${myList.endDay}</td>
-						<td>
-					<form action="likeDelete" method="get">
-                    <input type="hidden" name="popCode" value="${myList.popCode}">
-                    <input type="hidden" name="userId" value="${userId}">
-                    <input type="submit" value="삭제">
-                </form>
-						</td>
-					</tr>					
-				</c:forEach>
-			</table>
-		</article>
-    </div>
-    
-    <div style="display: none;" id="myBoard">
-    <h3>내가 쓴 리뷰</h3>
-  <table>
-        <c:forEach var="board" items="${popBoard}" >
-            <tr>
-                <td>
-                    <div id="stars-${board.num}" style="color: yellow">
-                        <script>
-                            var starCount = parseInt("${board.star}");
-                            var starHtml = '';
-                            for (var i = 0; i < starCount; i++) {
-                                starHtml += '<i class="fas fa-star active"></i>';
-                            }
-                            document.write(starHtml);
-                        </script>
-                    </div>
-                </td>
-                <td>${board.userId}</td>
-                <td>${board.title}</td>
-                <td>${board.content}</td>
-                <td>${board.regtime}</td>
-                <td hidden>${board.num}</td>
-                <td hidden>${board.popCode}</td>
-                <c:if test="${sessionScope.userId eq board.userId}">
-    <td><button onclick="window.location.href='/delMyPopboard?num=${board.num}&popCode=${popCode}'">삭제</button></td>
-</c:if>
-            </tr>
-        </c:forEach>
-    </table>
-    
-    </div>
+
+</footer>
     
     
     <script>
 		//---------회원가입 버튼을 눌렀을 경우 실행되는 코드-----------
 		function register() {
 			//패스워드가 같은지 확인후 같을 때만 업데이트 실행
-			var password = document.getElementById("pass").value.trim();
-			var confirmPassword = document.getElementById("confirm-pass").value.trim();
+			var password = document.getElementById("user_pw").value.trim();
+			var confirmPassword = document.getElementById("user_pw_confirm").value.trim();
 			if (password !== confirmPassword) {
 				document.getElementById("passNotEquals").style.display = "block";
 				return;
@@ -162,25 +218,25 @@
         var ueventValue = "${user.uevent}";
 
         if (userIdValue) {
-            document.getElementById("userId").value = userIdValue;
+            document.getElementById("user_id").value = userIdValue;
         }
         if (ueventValue) {
-            document.getElementById("uevent").checked = true;
+            document.getElementById("agree_event").checked = true;
         }
         if (unameValue) {
-            document.getElementById("uname").value = unameValue;
+            document.getElementById("user_name").value = unameValue;
         }
         if (passValue) {
-            document.getElementById("pass").value = passValue;
+            document.getElementById("user_pw").value = passValue;
         }
         if (emailValue) {
-            document.getElementById("email").value = emailValue;
+            document.getElementById("user_mail").value = emailValue;
         }
         if (phoneValue) {
-            document.getElementById("phoneNum").value = phoneValue;
+            document.getElementById("user_phone").value = phoneValue;
         }
         if (birthValue) {
-            document.getElementById("birth").value = birthValue;
+            document.getElementById("user_birth").value = birthValue;
         }
         var popDelValue = "${popDel}"; // popDel 값 받아오기
         if (popDelValue === "on") { // popDel 값이 "on"인 경우
