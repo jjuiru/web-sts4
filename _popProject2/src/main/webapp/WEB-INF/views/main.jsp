@@ -55,7 +55,7 @@
 			<div class="info_wrap">
 				<p class="title">TWS:<br>POP-UP STORE</p>
 				<p class="desc">THE HYUNDAI STORE<br>B2 ICONIC SQUARE</p>
-				<a href="root/sub_popup_li_01.html" class="btn_more _L _color_02 _bg_02">MORE</a>
+				<a href="/view?popCode=a01;" class="btn_more _L _color_02 _bg_02">MORE</a>
 			</div>
 		</div>
 		<div class="slides prev" data-index="3">
@@ -63,7 +63,7 @@
 			<div class="info_wrap">
 				<p class="title">PLAVE<br>POP-UP STORE</p>
 				<p class="desc">THE HYUNDAI STORE<br>F5 FLOOR</p>
-				<a href="#" class="btn_more _L _color_03 _bg_03">MORE</a>
+				<a href="/view?popCode=a04;" class="btn_more _L _color_03 _bg_03">MORE</a>
 			</div>
 		</div>
 		<div class="pagination">
@@ -82,53 +82,19 @@
 						<div class="view_mask">
 							<ul class="clearfix">
 								<li>
-									<a href="root/sub_popup_li_01.html">
-										<img src="images/img_index_aside_favored_01.jpg" alt="TWS: POP-UP STORE">
-									</a>
-									<h4>TWS: POP-UP STORE</h4>
-								</li>
-								<li>
-									<a href="#">
+									<a href="/view?popCode=a01">
 										<img src="root/images/img_index_aside_favored_01.jpg" alt="TWS: POP-UP STORE">
 									</a>
 									<h4>TWS: POP-UP STORE</h4>
 								</li>
-								<li>
-									<a href="#">
-										<img src="root/images/img_index_aside_favored_01.jpg" alt="TWS: POP-UP STORE">
+								<c:forEach var="list" items="${artlist}" begin="1" end="4">
+								<li >
+									<a href="/view?popCode=${list.popCode}">
+										<img src="<c:url value='${list.rink}' />" alt="pop mini img">
 									</a>
-									<h4>TWS: POP-UP STORE</h4>
+									<h4>${list.popName}</h4>
 								</li>
-								<li>
-									<a href="#">
-										<img src="root/images/img_index_aside_favored_01.jpg" alt="TWS: POP-UP STORE">
-									</a>
-									<h4>TWS: POP-UP STORE</h4>
-								</li>
-								<li>
-									<a href="#">
-										<img src="root/images/img_index_aside_favored_01.jpg" alt="TWS: POP-UP STORE">
-									</a>
-									<h4>TWS: POP-UP STORE</h4>
-								</li>
-								<li>
-									<a href="#">
-										<img src="root/images/img_index_aside_favored_01.jpg" alt="TWS: POP-UP STORE">
-									</a>
-									<h4>TWS: POP-UP STORE</h4>
-								</li>
-								<li>
-									<a href="#">
-										<img src="root/images/img_index_aside_favored_01.jpg" alt="TWS: POP-UP STORE">
-									</a>
-									<h4>TWS: POP-UP STORE</h4>
-								</li>
-								<li>
-									<a href="#">
-										<img src="root/images/img_index_aside_favored_01.jpg" alt="TWS: POP-UP STORE">
-									</a>
-									<h4>TWS: POP-UP STORE</h4>
-								</li>
+								</c:forEach>
 							</ul>
 						</div>
 						<button class="dir_btn prev _M _bg_BK"><span><span class="blind">prev button</span></span></button>
@@ -218,42 +184,14 @@
 					<div class="popup_wrap">
 						<div class="view_mask">
 							<ul class="clearfix">
+								<c:forEach var="list" items="${artlist}">
 								<li>
 									<div class="img_wrap">
-										<a href="#"><img src="root/images/img_index_popup_01.jpg" alt="TWS: POP-UP STORE poster image"></a>
+										<a href="/view?popCode=${list.popCode}"><img src="<c:url value='${list.rink}' />" alt="poster image"></a>
 									</div>
-									<p class="title">TWS: POP-UP STORE</p>
+									<p class="title">${list.popName}</p>
 								</li>
-								<li>
-									<div class="img_wrap">
-										<a href="#"><img src="root/images/img_index_popup_02.jpg" alt="Van Cleef & Arpels exhibition poster image"></a>
-									</div>
-									<p class="title">Van Cleef & Arpels</p>
-								</li>
-								<li>
-									<div class="img_wrap">
-										<a href="#"><img src="root/images/img_index_popup_03.jpg" alt="PLAVE 1st Anniversary POP-UP poster image"></a>
-									</div>
-									<p class="title">PLAVE 1st Anniversary POP-UP STORE</p>
-								</li>
-								<li>
-									<div class="img_wrap">
-										<a href="#"><img src="root/images/img_index_popup_04.jpg" alt="Teddy tales POP-UP STORE poster image"></a>
-									</div>
-									<p class="title">Teddy tales POP-UP POP-UP STORE</p>
-								</li>
-								<li>
-									<div class="img_wrap">
-										<a href="#"><img src="root/images/img_index_popup_05.jpg" alt="SENKA POP-UP STORE poster image"></a>
-									</div>
-									<p class="title">SENKA POP-UP STORE</p>
-								</li>
-								<li>
-									<div class="img_wrap">
-										<a href="#"><img src="root/images/img_index_popup_06.jpg" alt="DIABLO POP-UP STORE poster image"></a>
-									</div>
-									<p class="title">DIABLO POP-UP STORE</p>
-								</li>
+								</c:forEach>
 							</ul>
 						</div>
 						<button class="dir_btn prev _L _bg_BK"><span><span class="blind">prev button</span></span></button>

@@ -18,6 +18,14 @@ public interface ArtboardMapper {
 	
 	@Select("select * from artboard")
 	List<Artboard> selectAllArtboard();
+
+	@Select( "SELECT ab.pop_code, ab.pop_name, ab.start_day, ab.end_day, ab.content, ab.rink, ab.weblink, ab.place, AVG(pb.star) AS avg_star "
+			+"FROM  artboard ab "
+			+"LEFT JOIN "
+			+ "popboard pb ON ab.pop_code = pb.pop_code "
+			+ "GROUP BY ab.pop_code "
+			+ "ORDER BY avg_star DESC;")
+	List<Artboard> selectStarAvg();
 	
 	@Select("select * from artboard where POP_CODE =#{popCode}")
 	Artboard selectOneArtboard(String popCode);

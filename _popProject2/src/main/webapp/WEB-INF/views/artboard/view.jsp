@@ -109,14 +109,14 @@
     <h2 class="blind">POP-UP STORE information section</h2>
     <div class="inner_wrap_02">
         <div class="imgs_wrap">
-            <img src="root/images/img_sub_popup_li_info_01.jpg" alt="TWS: POP-UP STORE poster image 01">
+            <img src="<c:url value='${pop.rink}' />" alt="TWS: POP-UP STORE poster image 01">
         </div>
         <div class="txt_wrap">
             <h3>${pop.popName}</h3>
             <div class="info_desc">
                 <p>POP-UP STORE</p>
 <%--                <p>TWS : THE MUSEUM VISITOR</p>--%>
-                <p href="${pop.weblink}">@tws_pledis</p>
+                <p href="${pop.weblink}">${pop.weblink}</p>
             </div>
             <p class="desc">${pop.content}</p>
             <p class="desc_02">[Promotion]<br>- 의류 및 가방 구매 고객 대상 포토카드 1매를 랜덤 증정(상품 1개당 1매)<br>- 10만원 이상 구매고객 대상 포토부스 촬영 쿠폰을 증정(1인당 1매)<br>- 12만원 이상 구매고객 대상 포토카드세트 1set 증정(12만원 당 1세트)</p>

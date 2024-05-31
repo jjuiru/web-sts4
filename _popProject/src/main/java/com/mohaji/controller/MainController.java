@@ -148,12 +148,13 @@ public class MainController {
 	    model.addAttribute("popBoard", popboardService.selectPopboard(popCode, page)); // 페이지 번호 추가
 	    model.addAttribute("val", String.valueOf(popboardService.starsValue(popCode)));
 	    model.addAttribute("currentPage", page); // 현재 페이지 번호 추가
-
+		model.addAttribute("popCode", popCode);
+		System.out.println(popCode);
 	    // 전체 페이지 수 계산하여 뷰로 전달
 	    int totalPages = popboardService.calculateTotalPages(popCode, 5); // 페이지당 아이템 수는 10으로 가정
 	    model.addAttribute("totalPages", totalPages);
 		String userId=(String) session.getAttribute("userId"); //세션에서 유저 아이디 반환
-		
+
 		
 		if(userId==null) { //아이디가 없을 경우(로그인이 아닐 경우
 		model.addAttribute("text", "on");	

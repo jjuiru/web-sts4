@@ -21,6 +21,10 @@ public class ArtboardService {
     
     public List<Artboard> artboardList() {
         return artboardMapper.selectAllArtboard(); }
+
+    public List<Artboard> selectStarAvg(){
+        return artboardMapper.selectStarAvg();
+    };
     
     public Artboard artboardSelectCode(String popCode) {
         return artboardMapper.selectOneArtboard(popCode); }

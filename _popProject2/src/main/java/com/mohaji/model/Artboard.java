@@ -23,4 +23,5 @@ public class Artboard {
 	private String rink;
 	private String weblink;
 	private String place;
+	private int starAvg;
 }

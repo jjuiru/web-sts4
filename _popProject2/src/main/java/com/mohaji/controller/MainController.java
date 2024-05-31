@@ -66,7 +66,8 @@ public class MainController {
 	@GetMapping("/")
 	public String main(Model model, HttpServletRequest request) {
 		setLoginCAttribute(model, request); //loginC,userId 반환
-		model.addAttribute("artlist", artboardService.artboardList());		
+		model.addAttribute("artlist", artboardService.selectStarAvg());
+//		model.addAttribute("artlist", artboardService.artboardList());
 		return "main";
 	}
 	
@@ -74,7 +75,8 @@ public class MainController {
 	@GetMapping("/main")
 	public String main1(Model model, HttpServletRequest request) {
 		setLoginCAttribute(model, request);//loginC,userId 반환
-		model.addAttribute("artlist", artboardService.artboardList());	
+		model.addAttribute("artlist", artboardService.selectStarAvg());
+//		model.addAttribute("artlist", artboardService.artboardList());
 		return "main";
 	}
 	
@@ -150,6 +152,7 @@ public class MainController {
 	    model.addAttribute("popBoard", popboardService.selectPopboard(popCode, page)); // 페이지 번호 추가
 	    model.addAttribute("val", String.valueOf(popboardService.starsValue(popCode)));
 	    model.addAttribute("currentPage", page); // 현재 페이지 번호 추가
+		model.addAttribute("popCode", popCode);
 
 	    // 전체 페이지 수 계산하여 뷰로 전달
 	    int totalPages = popboardService.calculateTotalPages(popCode, 5); // 페이지당 아이템 수는 10으로 가정
